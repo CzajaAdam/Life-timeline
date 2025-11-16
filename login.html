@@ -87,19 +87,22 @@
 
         <div class="flex flex-col justify-start grow pt-2 items-center px-4">
 
+            <!-- Login/register description -->
+            <p id="log-reg-desc" class="text-charcoal-300 mb-4 text-center max-w-md text-lg text-pretty">Welcome back! Please enter your credentials to access your <span class="text-caleadon-600 font-bold">Life Timeline</span>.</p>
+
             <!-- Login Form -->
             <div id="login-form" class="bg-charcoal-800 p-6 rounded-lg shadow-lg w-full">
                 <form action="#" method="POST" class="space-y-4">
                     <div>
-                        <label for="username" class="block text-charcoal-200 mb-2">Username</label>
-                        <input type="text" id="username" name="username" required class="w-full p-2 rounded bg-charcoal-700 text-charcoal-50 focus:outline-none focus:ring-2 focus:ring-caleadon-500">
+                        <label for="email" class="block text-charcoal-200 mb-2">Email Address</label>
+                        <input type="text" id="email" name="email" required class="w-full p-2 rounded-lg bg-charcoal-700 text-charcoal-50 focus:outline-none focus:ring-2 focus:ring-caleadon-500">
                     </div>
                     <div>
                         <label for="password" class="block text-charcoal-200 mb-2">Password</label>
-                        <input type="password" id="password" name="password" required class="w-full p-2 rounded bg-charcoal-700 text-charcoal-50 focus:outline-none focus:ring-2 focus:ring-caleadon-500">
+                        <input type="password" id="password" name="password" required class="w-full p-2 rounded-lg bg-charcoal-700 text-charcoal-50 focus:outline-none focus:ring-2 focus:ring-caleadon-500">
                     </div>
                     <div>
-                        <button type="submit" class="w-full bg-caleadon-600 text-charcoal-50 p-2 rounded hover:bg-caleadon-700 transition cursor-pointer">Login</button>
+                        <button type="submit" class="w-full bg-caleadon-600 text-charcoal-50 p-2 rounded-lg hover:bg-caleadon-700 transition cursor-pointer">Login</button>
                     </div>
                 </form>
             </div>
@@ -107,26 +110,36 @@
             <!-- Registration Form -->
             <div id="registration-form" class="bg-charcoal-800 p-6 rounded-lg w-full shadow-lg hidden">
                 <form action="#" method="POST" class="space-y-4">
+                    <div class="flex gap-4">
+                        <div>
+                            <label for="firstName" class="block text-charcoal-200 mb-2">First Name</label>
+                            <input type="text" id="firstName" name="firstName" required class="w-full p-2 rounded-lg bg-charcoal-700 text-charcoal-50 focus:outline-none focus:ring-2 focus:ring-cambridge-400">
+                        </div>
+                        <div>
+                            <label for="lastName" class="block text-charcoal-200 mb-2">Last Name</label>
+                            <input type="text" id="lastName" name="lastName" required class="w-full p-2 rounded-lg bg-charcoal-700 text-charcoal-50 focus:outline-none focus:ring-2 focus:ring-cambridge-400">
+                        </div>
+                    </div>
                     <div>
-                        <label for="username" class="block text-charcoal-200 mb-2">Username</label>
-                        <input type="text" id="username" name="username" required class="w-full p-2 rounded bg-charcoal-700 text-charcoal-50 focus:outline-none focus:ring-2 focus:ring-cambridge-400">
+                        <label for="email" class="block text-charcoal-200 mb-2">Email Address</label>
+                        <input type="email" id="email" name="email" required class="w-full p-2 rounded-lg bg-charcoal-700 text-charcoal-50 focus:outline-none focus:ring-2 focus:ring-cambridge-400">
                     </div>
                     <div>
                         <label for="password" class="block text-charcoal-200 mb-2">Password</label>
-                        <input type="password" id="password" name="password" required class="w-full p-2 rounded bg-charcoal-700 text-charcoal-50 focus:outline-none focus:ring-2 focus:ring-cambridge-400">
+                        <input type="password" id="password" name="password" required class="w-full p-2 rounded-lg bg-charcoal-700 text-charcoal-50 focus:outline-none focus:ring-2 focus:ring-cambridge-400">
                     </div>
                     <div>
                         <label for="confirm-password" class="block text-charcoal-200 mb-2">Confirm Password</label>
-                        <input type="password" id="confirm-password" name="confirm-password" required class="w-full p-2 rounded bg-charcoal-700 text-charcoal-50 focus:outline-none focus:ring-2 focus:ring-cambridge-400">
+                        <input type="password" id="confirm-password" name="confirm-password" required class="w-full p-2 rounded-lg bg-charcoal-700 text-charcoal-50 focus:outline-none focus:ring-2 focus:ring-cambridge-400">
                     </div>
                     <div>
-                        <button type="submit" class="w-full bg-cambridge-500 text-charcoal-50 p-2 rounded hover:bg-cambridge-600 transition cursor-pointer">Register</button>
+                        <button type="submit" class="w-full bg-cambridge-500 text-charcoal-50 p-2 rounded-lg hover:bg-cambridge-600 transition cursor-pointer">Register</button>
                     </div>
                 </form>
             </div>
     
             <!-- Change to Registration -->
-            <button id="switch-link" class="text-cambridge-400 hover:text-cambridge-500 transition cursor-pointer mt-4 font-light" onclick="regLogSwitch()">Create an Account</button>
+            <button id="switch-link" class="text-caleadon-600 hover:text-caleadon-700 transition cursor-pointer mt-4 font-light" onclick="regLogSwitch()">Create an Account</button>
         </div>
         
         <!-- Footer -->
