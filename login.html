@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+        @theme {
+        /* Charcoal */
+        --color-charcoal: #454851;
+        --color-charcoal-50: #F2F3F5;
+        --color-charcoal-100: #E6E8EB;
+        --color-charcoal-200: #BFC4CA;
+        --color-charcoal-300: #999FA6;
+        --color-charcoal-400: #727A83;
+        --color-charcoal-500: #4B535E;
+        --color-charcoal-600: #3A414A;
+        --color-charcoal-700: #292E33;
+        --color-charcoal-800: #181A1D;
+        --color-charcoal-900: #101113;
+
+        /* Asparagus */
+        --color-asparagus: #73956F;
+        --color-asparagus-50: #F0F4F0;
+        --color-asparagus-100: #D9E3D9;
+        --color-asparagus-200: #A9BFA9;
+        --color-asparagus-300: #7A9C7A;
+        --color-asparagus-400: #4A784A;
+        --color-asparagus-500: #1B541B;
+        --color-asparagus-600: #154213;
+        --color-asparagus-700: #0E2F0E;
+        --color-asparagus-800: #081A08;
+        --color-asparagus-900: #040D04;
+
+        /* Cambridge */
+        --color-cambridge: #7BAE7F;
+        --color-cambridge-50: #F0F5F0;
+        --color-cambridge-100: #D8E4D8;
+        --color-cambridge-200: #A8BFA8;
+        --color-cambridge-300: #799C79;
+        --color-cambridge-400: #4A784A;
+        --color-cambridge-500: #1B541B;
+        --color-cambridge-600: #154213;
+        --color-cambridge-700: #0E2F0E;
+        --color-cambridge-800: #081A08;
+        --color-cambridge-900: #040D04;
+
+        /* Caleadon */
+        --color-caleadon: #95D7AE;
+        --color-caleadon-50: #F0FBF7;
+        --color-caleadon-100: #D8F3E7;
+        --color-caleadon-200: #A8E6CC;
+        --color-caleadon-300: #79D9B0;
+        --color-caleadon-400: #4ACD95;
+        --color-caleadon-500: #1BCF7A;
+        --color-caleadon-600: #15A85F;
+        --color-caleadon-700: #0E7A40;
+        --color-caleadon-800: #084D24;
+        --color-caleadon-900: #042712;
+
+        /* Lavender */
+        --color-lavender: #FCEFF9;
+        --color-lavender-50: #FFFFFF;
+        --color-lavender-100: #FFF5FB;
+        --color-lavender-200: #FCDFF2;
+        --color-lavender-300: #F9BFE0;
+        --color-lavender-400: #F79FD0;
+        --color-lavender-500: #F57FC0;
+        --color-lavender-600: #C56399;
+        --color-lavender-700: #94466E;
+        --color-lavender-800: #622B45;
+        --color-lavender-900: #311522;
+        }
+    </style>
+
+</head>
+<body class="bg-charcoal-900">
+    <div class="container mx-auto p-4 flex flex-col justify-between min-h-screen">
+        <!-- Header -->
+        <header class="flex justify-start items-center flex-col">
+            <h1 class="text-2xl text-center font-bold text-charcoal-50 mb-2 py-2">Life Timeline</h1>
+            <hr class="w-1/3 border-charcoal-700 mb-4">
+        </header>
+
+        <div class="flex flex-col justify-start grow pt-2 items-center px-4">
+
+            <!-- Login Form -->
+            <div id="login-form" class="bg-charcoal-800 p-6 rounded-lg shadow-lg w-full">
+                <form action="#" method="POST" class="space-y-4">
+                    <div>
+                        <label for="username" class="block text-charcoal-200 mb-2">Username</label>
+                        <input type="text" id="username" name="username" required class="w-full p-2 rounded bg-charcoal-700 text-charcoal-50 focus:outline-none focus:ring-2 focus:ring-caleadon-500">
+                    </div>
+                    <div>
+                        <label for="password" class="block text-charcoal-200 mb-2">Password</label>
+                        <input type="password" id="password" name="password" required class="w-full p-2 rounded bg-charcoal-700 text-charcoal-50 focus:outline-none focus:ring-2 focus:ring-caleadon-500">
+                    </div>
+                    <div>
+                        <button type="submit" class="w-full bg-caleadon-600 text-charcoal-50 p-2 rounded hover:bg-caleadon-700 transition cursor-pointer">Login</button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Registration Form -->
+            <div id="registration-form" class="bg-charcoal-800 p-6 rounded-lg w-full shadow-lg hidden">
+                <form action="#" method="POST" class="space-y-4">
+                    <div>
+                        <label for="username" class="block text-charcoal-200 mb-2">Username</label>
+                        <input type="text" id="username" name="username" required class="w-full p-2 rounded bg-charcoal-700 text-charcoal-50 focus:outline-none focus:ring-2 focus:ring-cambridge-400">
+                    </div>
+                    <div>
+                        <label for="password" class="block text-charcoal-200 mb-2">Password</label>
+                        <input type="password" id="password" name="password" required class="w-full p-2 rounded bg-charcoal-700 text-charcoal-50 focus:outline-none focus:ring-2 focus:ring-cambridge-400">
+                    </div>
+                    <div>
+                        <label for="confirm-password" class="block text-charcoal-200 mb-2">Confirm Password</label>
+                        <input type="password" id="confirm-password" name="confirm-password" required class="w-full p-2 rounded bg-charcoal-700 text-charcoal-50 focus:outline-none focus:ring-2 focus:ring-cambridge-400">
+                    </div>
+                    <div>
+                        <button type="submit" class="w-full bg-cambridge-500 text-charcoal-50 p-2 rounded hover:bg-cambridge-600 transition cursor-pointer">Register</button>
+                    </div>
+                </form>
+            </div>
+    
+            <!-- Change to Registration -->
+            <button id="switch-link" class="text-cambridge-400 hover:text-cambridge-500 transition cursor-pointer mt-4 font-light" onclick="regLogSwitch()">Create an Account</button>
+        </div>
+        
+        <!-- Footer -->
+        <footer class="flex justify-end items-center flex-col">
+            <hr class="border-charcoal-700 mt-8 mb-4 w-1/3">
+            <p class="text-center text-charcoal-400 text-sm py-2">© 2025 Life Timeline. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+<script src="script.js"></script>
+</html>
