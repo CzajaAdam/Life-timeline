@@ -1,83 +1,13 @@
+<?php
+    session_start();
+    if (isset($_SESSION['user']['id'])) {
+        header('Location: index.php');
+        exit();
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LifeLines</title>
-    <link rel="icon" href="lifelines.png" type="image/x-icon">
-
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <style type="text/tailwindcss">
-        @theme {
-        /* Charcoal */
-        --color-charcoal: #454851;
-        --color-charcoal-50: #F2F3F5;
-        --color-charcoal-100: #E6E8EB;
-        --color-charcoal-200: #BFC4CA;
-        --color-charcoal-300: #999FA6;
-        --color-charcoal-400: #727A83;
-        --color-charcoal-500: #4B535E;
-        --color-charcoal-600: #3A414A;
-        --color-charcoal-700: #292E33;
-        --color-charcoal-800: #181A1D;
-        --color-charcoal-900: #101113;
-
-        /* Asparagus */
-        --color-asparagus: #73956F;
-        --color-asparagus-50: #F0F4F0;
-        --color-asparagus-100: #D9E3D9;
-        --color-asparagus-200: #A9BFA9;
-        --color-asparagus-300: #7A9C7A;
-        --color-asparagus-400: #4A784A;
-        --color-asparagus-500: #1B541B;
-        --color-asparagus-600: #154213;
-        --color-asparagus-700: #0E2F0E;
-        --color-asparagus-800: #081A08;
-        --color-asparagus-900: #040D04;
-
-        /* Cambridge */
-        --color-cambridge: #7BAE7F;
-        --color-cambridge-50: #F0F5F0;
-        --color-cambridge-100: #D8E4D8;
-        --color-cambridge-200: #A8BFA8;
-        --color-cambridge-300: #799C79;
-        --color-cambridge-400: #4A784A;
-        --color-cambridge-500: #1B541B;
-        --color-cambridge-600: #2E6E2E;
-        --color-cambridge-700: #255925;
-        --color-cambridge-800: #1B541B;
-        --color-cambridge-950: #0A2A0A;
-
-        /* Caleadon */
-        --color-caleadon: #95D7AE;
-        --color-caleadon-50: #F0FBF7;
-        --color-caleadon-100: #D8F3E7;
-        --color-caleadon-200: #A8E6CC;
-        --color-caleadon-300: #79D9B0;
-        --color-caleadon-400: #4ACD95;
-        --color-caleadon-500: #1BCF7A;
-        --color-caleadon-600: #15A85F;
-        --color-caleadon-700: #0E7A40;
-        --color-caleadon-800: #084D24;
-        --color-caleadon-900: #042712;
-
-        /* Lavender */
-        --color-lavender: #FCEFF9;
-        --color-lavender-50: #FFFFFF;
-        --color-lavender-100: #FFF5FB;
-        --color-lavender-200: #FCDFF2;
-        --color-lavender-300: #F9BFE0;
-        --color-lavender-400: #F79FD0;
-        --color-lavender-500: #F57FC0;
-        --color-lavender-600: #C56399;
-        --color-lavender-700: #94466E;
-        --color-lavender-800: #622B45;
-        --color-lavender-900: #311522;
-        }
-    </style>
-
-</head>
+<?php include 'head.php'; ?>
 <body class="bg-charcoal-900">
     <div class="container mx-auto p-4 flex flex-col justify-between min-h-screen">
         <!-- Header -->
@@ -96,7 +26,7 @@
         
             <!-- Registration Form -->
             <div id="registration-form" class="bg-charcoal-800 p-6 rounded-lg shadow-lg w-full xl:w-1/3 lg:w-2/5 md:w-1/2 sm:w-2/3">
-                <form action="#" method="POST" class="space-y-4">
+                <form action="src/register.php" method="POST" class="space-y-4">
                     <div class="flex gap-4">
                         <div class="w-full">
                             <label for="firstName" class="block text-charcoal-200 mb-2">First Name</label>
@@ -117,7 +47,7 @@
                     </div>
                     <div>
                         <label for="confirm-password" class="block text-charcoal-200 mb-2">Confirm Password</label>
-                        <input type="password" id="confirm-password" name="confirm-password" required class="w-full p-2 rounded-lg bg-charcoal-700 text-charcoal-50 focus:outline-none focus:ring-2 focus:ring-cambridge-400">
+                        <input type="password" id="confirm-password" name="confirmPassword" required class="w-full p-2 rounded-lg bg-charcoal-700 text-charcoal-50 focus:outline-none focus:ring-2 focus:ring-cambridge-400">
                     </div>
                     <div>
                         <button type="submit" class="w-full bg-cambridge-500 text-charcoal-50 p-2 rounded-lg hover:bg-cambridge-600 transition cursor-pointer">Register</button>
@@ -126,7 +56,7 @@
             </div>
     
             <!-- Change to Login -->
-            <a href="login.html">
+            <a href="login.php">
                 <button id="switch-link" class="text-cambridge-500 hover:text-cambridge-600 transition cursor-pointer mt-4 font-light underline">Already have an Account?</button>
             </a>
         </div>
