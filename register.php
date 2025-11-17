@@ -7,7 +7,7 @@
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<?php include 'head.php'; ?>
+<?php include 'templates/head.php'; ?>
 <body class="bg-charcoal-900">
     <div class="container mx-auto p-4 flex flex-col justify-between min-h-screen">
         <!-- Header -->
