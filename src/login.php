@@ -37,7 +37,7 @@
     $_SESSION['user'] = [
         'id' => $user['id'],
         'email' => $user['email'],
-        'name' => $user['name']
+        'name' => $user['first_name']
     ];
 
     // Redirect to dashboard or home page after successful login
