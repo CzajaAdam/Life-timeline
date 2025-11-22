@@ -4,7 +4,10 @@
 </a>
 <!-- md:w-20 tu problem -->
 <div id="menu" class="fixed top-0 left-0 h-full md:block bg-charcoal-800 shadow-lg p-4 md:w-20 w-64 md:hover:w-64 flex flex-col justify-start items-center -translate-x-full md:translate-x-0 transition-all duration-300 ease-in-out z-50 group">
+    
     <div class="flex flex-col space-y-4 md:space-y-6 w-full">
+        
+        <!-- Buttons -->
         <a id="cancel-button" onclick="menuToggle()" class="flex items-center mb-0 space-x-2 text-charcoal-200 hover:text-charcoal-400 md:hidden">
             <i class="fa-solid fa-xmark text-4xl w-10 text-center"></i>
             <span>Close</span>
@@ -21,6 +24,10 @@
         <a href="settings.php" class="flex items-center space-x-2 text-charcoal-200 hover:text-charcoal-400">
             <i class="fa-solid fa-gear text-3xl w-10 text-center flex-shrink-0"></i>
             <span class="whitespace-nowrap md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">Settings</span>
+        </a>
+        <a href="src/logout.php" class="flex items-center space-x-2 text-charcoal-200 hover:text-charcoal-400 mt-auto">
+            <i class="fa-solid fa-right-from-bracket text-3xl w-10 text-center flex-shrink-0"></i>
+            <span class="whitespace-nowrap md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">Logout</span>
         </a>
     </div>
 </div>
