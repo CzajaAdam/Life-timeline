@@ -35,23 +35,60 @@
         <!-- Welcome Section -->
         <div class="flex flex-col justify-start grow pt-2 items-center px-4">
             <h2 class="text-charcoal-200 text-2xl mb-4">Welcome, <?php echo htmlspecialchars($_SESSION['user']['name']); ?>!</h2>
-            <p class="text-charcoal-300 text-center max-w-md text-lg text-pretty">This is your dashboard. From here, you can manage your LifeLines and access all the features available to you.</p>
+            <p class="text-charcoal-300 text-center max-w-md text-lg text-pretty mb-4">This is your dashboard. From here, you can manage your LifeLines and access all the features available to you.</p>
+            
+            <form class="flex flex-col p-4 rounded-xl text-charcoal-50 bg-charcoal-800 border border-charcoal-700 shadow-lg" action="src/events/create.php" method="POST">
+                <input class="p-3 shadow-lg mb-2 rounded bg-charcoal-700 text-charcoal-50 placeholder-charcoal-300" placeholder="Title" type="text" name="event-type">
+                <input class="p-3 shadow-lg mb-2 rounded bg-charcoal-700 text-charcoal-50 placeholder-charcoal-300" placeholder="Description" type="text" name="event-description">
+                
+                <!-- Custom Datepicker -->
+                <div class="relative mb-2">
+                    <input type="text" id="dateInput" placeholder="Select a date" readonly class="w-full p-3 shadow-lg rounded bg-charcoal-700 text-charcoal-50 placeholder-charcoal-300 border border-transparent cursor-pointer focus:outline-none focus:border-caleadon-600 transition">
+                
+                    <!-- Hidden input to store actual date value -->
+                    <input type="hidden" id="dateValue" name="event-date">
+
+                    <!-- Datepicker -->
+                    <div id="datepicker" class="datepicker absolute top-full left-0 w-76 bg-charcoal-800 border border-charcoal-700 rounded-xl shadow-2xl p-5 mt-2 z-50">
+                        <!-- Header -->
+                        <div class="flex justify-between gap-5 items-center mb-5">
+                            <button id="prevMonth" type="button" class="bg-charcoal-700 hover:bg-charcoal-700/80 text-charcoal-50 w-8 h-8 rounded-lg flex items-center justify-center transition">
+                                <i class="fa-solid fa-arrow-left"></i>
+                            </button>
+                            <span id="monthYear" class="text-charcoal-50 font-semibold text-nowrap"></span>
+                            <button id="nextMonth" type="button" class="bg-charcoal-700 hover:bg-charcoal-700/80 text-charcoal-50 w-8 h-8 rounded-lg flex items-center justify-center transition">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+
+                        <!-- Days Grid -->
+                        <div class="grid grid-cols-7 gap-2">
+                            <!-- Day Names -->
+                            <div class="text-center text-xs text-charcoal-300 font-semibold py-2">Su</div>
+                            <div class="text-center text-xs text-charcoal-300 font-semibold py-2">Mo</div>
+                            <div class="text-center text-xs text-charcoal-300 font-semibold py-2">Tu</div>
+                            <div class="text-center text-xs text-charcoal-300 font-semibold py-2">We</div>
+                            <div class="text-center text-xs text-charcoal-300 font-semibold py-2">Th</div>
+                            <div class="text-center text-xs text-charcoal-300 font-semibold py-2">Fr</div>
+                            <div class="text-center text-xs text-charcoal-300 font-semibold py-2">Sa</div>
+                            
+                            <!-- Days will be inserted here -->
+                            <div id="daysContainer" class="col-span-7 grid grid-cols-7 gap-2"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <label for="event-color" class="text-charcoal-300 text-pretty">Event Color:</label>
+                <input value="#15A85F" class="shadow-lg appearance-none w-full h-14 bg-transparent border-none cursor-pointer" type="color" name="event-color">
+                <label for="event-icon" class="text-charcoal-300 text-pretty">Event Icon:</label>
+                <select class="p-3 shadow-lg mb-2 rounded bg-charcoal-700" name="event-icon">
+                    <option class="bg-charcoal-700 custom-select" value="1">1</option>
+                    <option class="bg-charcoal-700 custom-select" value="2">2</option>
+                    <option class="bg-charcoal-700 custom-select" value="3">3</option>
+                </select>
+                <button class="p-3 shadow-lg rounded bg-caleadon-600 hover:bg-caleadon-700 cursor-pointer text-charcoal-50 font-semibold" type="submit">Create Event</button>
+            </form>
         </div>
-
-        <!-- Main Content -->
-
-        <form action="src/events/create.php" method="POST">
-            <input type="date" name="event-date">
-            <input type="text" name="event-type">
-            <input type="text" name="event-description">
-            <input type="color" name="event-color">
-            <select name="event-icon">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-            </select>
-            <button type="submit">Create Event</button>
-        </form>
 
         <!-- Timeline Events -->
         <div class="flex flex-col w-full md:w-[50vw] mx-auto my-[5%] px-4 md:px-0">
@@ -89,7 +126,7 @@
 
         <!-- Footer -->
         <?php include 'templates/footer.php'; ?>
-    </div>
+    </div>  
+    <script src="script.js"></script>
 </body>
-<script src="script.js"></script>
 </html>
