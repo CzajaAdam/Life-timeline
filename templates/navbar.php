@@ -4,7 +4,11 @@
 </a>
 <div id="menu" class="fixed top-0 left-0 h-full bg-charcoal-800 shadow-lg p-4 hidden md:flex">
     <div class="flex flex-col space-y-6 w-full">
-        <a id="close-button" onclick="menuToggle(); desktopMenuToggle()" class="flex items-center mb-4 text-charcoal-200 hover:text-charcoal-400 md:hidden cursor-pointer">
+        <a id="close-button" onclick="menuToggle()" class="flex items-center mb-4 text-charcoal-200 hover:text-charcoal-400 md:hidden cursor-pointer">
+            <i class="fa-solid fa-xmark text-3xl w-10 text-center flex-shrink-0"></i>
+            <span class="hidden md:inline-flex">Close</span>
+        </a>
+        <a id="desktop-close-button" onclick="menuToggle(); desktopMenuToggle()" class="flex items-center mb-4 text-charcoal-200 hover:text-charcoal-400 hidden cursor-pointer">
             <i class="fa-solid fa-xmark text-3xl w-10 text-center flex-shrink-0"></i>
             <span class="hidden md:inline-flex">Close</span>
         </a>

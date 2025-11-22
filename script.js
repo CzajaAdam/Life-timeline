@@ -9,7 +9,7 @@ function menuToggle() {
 function desktopMenuToggle() {
     const menu = document.getElementById('menu');
     const menuButton = document.getElementById('menu-button');
-    const closeButton = document.getElementById('close-button');
+    const closeButton = document.getElementById('desktop-close-button');
     const menuTexts = document.querySelectorAll('.menu-text');
     const menuAs = menu.querySelectorAll('a');
     
@@ -17,5 +17,5 @@ function desktopMenuToggle() {
     menuAs.forEach(a => a.classList.toggle('md:space-x-2'));
     menuTexts.forEach(text => text.classList.toggle('hidden'));
     menuButton.classList.toggle('md:flex');
-    closeButton.classList.toggle('md:hidden');
+    closeButton.classList.toggle('hidden');
 }
