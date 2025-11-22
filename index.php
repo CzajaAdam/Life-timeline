@@ -12,9 +12,7 @@
     <div class="container mx-auto flex flex-col justify-between min-h-screen p-4">
 
         <!-- Navbar -->
-        <nav class="absolute left-0 top-0 h-full">
-            <?php include 'templates/navbar.php'; ?>
-        </nav>
+        <?php include 'templates/navbar.php'; ?>
 
         <!-- Header -->
         <header class="flex justify-start items-center flex-col">
@@ -29,10 +27,9 @@
             <p class="text-charcoal-300 text-center max-w-md text-lg text-pretty">This is your dashboard. From here, you can manage your LifeLines and access all the features available to you.</p>
         </div>
 
-
-
+        <!-- Footer -->
+        <?php include 'templates/footer.php'; ?>
     </div>
-
 </body>
 <script src="script.js"></script>
 </html>
