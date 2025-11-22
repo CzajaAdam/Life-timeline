@@ -1,5 +1,5 @@
 <!-- Footer -->
-<footer class="bg-charcoal-800 border-t border-charcoal-700 absolute bottom-0 left-0 w-full">
+<footer class="bg-charcoal-800 border-t border-charcoal-700 w-full absolute bottom-0 left-0 z-30">
     <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div class="md:flex md:justify-between">
           <div class="mb-6 md:mb-0">

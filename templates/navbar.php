@@ -1,7 +1,7 @@
-<nav class="fixed left-0 top-0 h-full border-r border-charcoal-700">
-    <a id="list-button" class="md:hidden text-charcoal-200 hover:text-charcoal-400 mx-auto inline-flex items-center justify-center p-4" onclick="menuToggle()">
-        <i class="fa-solid fa-list text-4xl"></i>
-    </a>
+<a id="list-button" class="absolute top-0 left-0 md:hidden text-charcoal-200 hover:text-charcoal-400 mx-auto inline-flex items-center justify-center p-4" onclick="menuToggle()">
+    <i class="fa-solid fa-list text-4xl"></i>
+</a>
+<nav id="nav" class="fixed left-0 top-0 h-full md:border-r border-charcoal-700 z-20">
     <div id="menu" class="h-full bg-charcoal-800 shadow-lg p-4 hidden md:flex">
         <div class="flex flex-col space-y-6 w-full">
             <a id="close-button" onclick="menuToggle()" class="flex items-center mb-4 text-charcoal-200 hover:text-charcoal-400 md:hidden cursor-pointer">

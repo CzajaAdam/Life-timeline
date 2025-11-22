@@ -1,8 +1,11 @@
 function menuToggle() {
     const menu = document.getElementById('menu');
+    const nav = document.getElementById('nav');
     const listButton = document.getElementById('list-button');
     
+    nav.classList.toggle('border-r');
     listButton.classList.toggle('hidden');
+    listButton.classList.toggle('inline-flex');
     menu.classList.toggle('hidden');
 }
 
