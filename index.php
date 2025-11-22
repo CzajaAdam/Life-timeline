@@ -161,13 +161,22 @@
             
             <h2 class="text-charcoal-100 text-2xl mb-8 text-4xl text-center font-bold">Your <span class="text-caleadon-600">LifeLine!</span></h2>
 
-            <?php foreach ($events as $event): ?>
+
+            <?php 
+                $eventCount = count($events);
+                $currentIndex = 0;
+            ?>
+            <?php foreach ($events as $event): 
+                $currentIndex++;
+                $isLastEvent = ($currentIndex === $eventCount);
+            ?>
                 <!-- Timeline Event -->
                 <div class="relative flex flex-col md:flex-row bg-charcoal-100 mb-5 rounded-lg shadow-[0_30px_60px_-12px_rgba(50,50,93,0.25),0_18px_36px_-18px_rgba(0,0,0,0.3),0_-12px_36px_-8px_rgba(0,0,0,0.025)]">
                     <div class="relative flex flex-col justify-center items-center">
                         <!-- Vertical line -->
-                        <div class="hidden md:block absolute w-0.5 h-3/7 bg-[<?php echo htmlspecialchars($event['color']); ?>] top-7/8 -left-[3.563rem] -z-10"></div>
-                        
+                        <?php if (!$isLastEvent): ?>
+                            <div class="hidden md:block absolute w-0.5 h-3/7 bg-[<?php echo htmlspecialchars($event['color']); ?>] top-7/8 -left-[3.563rem] -z-10"></div>
+                        <?php endif; ?>
                         <!-- Circle -->
                         <div class="hidden md:flex md:items-center md:justify-center absolute w-20 h-20 bg-[<?php echo htmlspecialchars($event['color']); ?>]/20 rounded-full -left-24 top-1/2 -translate-y-1/2 border-2 border-[<?php echo htmlspecialchars($event['color']); ?>]">
                             <i class="<?php echo htmlspecialchars($event['icon']); ?> text-[2.5rem] text-[<?php echo htmlspecialchars($event['color']); ?>] hidden md:inline-flex"></i>
@@ -180,17 +189,22 @@
                         </div>
                     </div>
                     
-                    <div class="p-5 md:w-[60%]">
-                        <div class="text-[1.2rem] leading-relaxed uppercase font-semibold text-[<?php echo htmlspecialchars($event['color']); ?>] tracking-widest mb-2">
-                            <a href="event-page.php">
-                                <?php echo htmlspecialchars($event['type']); ?>
-                            </a>
+                    <div class="p-5 md:w-[60%] flex justify-between items-center gap-4">
+                        <div class="flex flex-col">
+                            <div class="text-[1.2rem] leading-relaxed uppercase font-semibold text-[<?php echo htmlspecialchars($event['color']); ?>] tracking-widest mb-2">
+                                <a href="event-page.php">
+                                    <?php echo htmlspecialchars($event['type']); ?>
+                                </a>
+                            </div>
+                            <div class="text-[#525f7f]">
+                                <p>
+                                    <?php echo htmlspecialchars($event['description']); ?>
+                                </p>
+                            </div>
                         </div>
-                        <div class="text-[#525f7f]">
-                            <p>
-                                <?php echo htmlspecialchars($event['description']); ?>
-                            </p>
-                        </div>
+                        <a href="src/events/delete.php?id=<?php echo urlencode($event['id']); ?>" class="ml-auto">
+                            <i class="fa-solid fa-trash-can cursor-pointer text-red-600 text-3xl"></i>
+                        </a>
                     </div>
                 </div>
             <?php endforeach; ?>
