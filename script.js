@@ -146,3 +146,52 @@ function formatDate(date) {
 
 // Initialize
 renderCalendar();
+
+// Toggle dropdown
+document.getElementById('icon-dropdown-btn').addEventListener('click', function(e) {
+    e.stopPropagation(); // Prevent this click from immediately closing the dropdown
+    const grid = document.getElementById('icon-grid');
+    const arrow = document.getElementById('dropdown-arrow');
+    grid.classList.toggle('hidden');
+    arrow.classList.toggle('rotate-180');
+});
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(event) {
+    const iconGrid = document.getElementById('icon-grid');
+    const dropdownBtn = document.getElementById('icon-dropdown-btn');
+    const arrow = document.getElementById('dropdown-arrow');
+    
+    // Check if click is outside both the dropdown button and the grid
+    if (!dropdownBtn.contains(event.target) && !iconGrid.contains(event.target)) {
+        iconGrid.classList.add('hidden');
+        arrow.classList.remove('rotate-180');
+    }
+});
+
+// Prevent clicks inside the grid from closing it
+document.getElementById('icon-grid').addEventListener('click', function(e) {
+    e.stopPropagation();
+});
+
+// Icon selection
+document.querySelectorAll('.icon-option').forEach(button => {
+    button.addEventListener('click', function() {
+        // Remove selected class from all buttons
+        document.querySelectorAll('.icon-option').forEach(btn => {
+            btn.classList.remove('selected', 'ring-2', 'ring-caleadon-500');
+        });
+        
+        // Add selected class to clicked button
+        this.classList.add('selected', 'ring-2', 'ring-caleadon-500');
+        
+        // Update hidden input and display
+        const value = this.dataset.value;
+        document.getElementById('event-icon').value = value;
+        document.getElementById('selected-icon-name').innerHTML = '<i class="' + value + ' text-2xl"></i>';
+        
+        // Close dropdown
+        document.getElementById('icon-grid').classList.add('hidden');
+        document.getElementById('dropdown-arrow').classList.remove('rotate-180');
+    });
+});

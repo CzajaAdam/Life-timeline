@@ -3,6 +3,10 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
+.icon-option {
+  font-family: 'FontAwesome';
+}
+
 [type="color"]::-webkit-color-swatch {
   border-radius: 15px;
   border: none;
