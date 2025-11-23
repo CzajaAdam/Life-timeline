@@ -195,3 +195,9 @@ document.querySelectorAll('.icon-option').forEach(button => {
         document.getElementById('dropdown-arrow').classList.remove('rotate-180');
     });
 });
+
+// Create Event Form Toggle
+function toggleCreateEventForm() {
+    const form = document.getElementById('create-event-form');
+    form.classList.toggle('hidden');
+}

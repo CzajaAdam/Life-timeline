@@ -37,15 +37,19 @@
             <h2 class="text-charcoal-200 text-2xl mb-4">Welcome, <?php echo htmlspecialchars($_SESSION['user']['name']); ?>!</h2>
             <p class="text-charcoal-300 text-center max-w-md text-lg text-pretty mb-4">This is your dashboard. From here, you can manage your LifeLines and access all the features available to you.</p>
             
-            <form class="flex flex-col p-4 rounded-xl text-charcoal-50 bg-charcoal-800 border border-charcoal-700 shadow-lg" action="src/events/create.php" method="POST">
+            <!-- Create Event Button -->
+            <button onclick="toggleCreateEventForm()" id="create-event-btn" class="mb-8 p-3 shadow-lg rounded bg-caleadon-600 hover:bg-caleadon-700 cursor-pointer text-charcoal-50 font-semibold">Create New Event</button>
+
+            <!-- Create Event Form -->
+            <form class="hidden flex flex-col p-4 rounded-xl text-charcoal-50 bg-charcoal-800 border border-charcoal-700 shadow-lg w-84 space-y-3" id="create-event-form" action="src/events/create.php" method="POST">
                 <!-- Event Type -->
-                <input class="p-3 shadow-lg mb-2 rounded bg-charcoal-700 text-charcoal-50 placeholder-charcoal-300" placeholder="Title" type="text" name="event-type">
+                <input class="p-3 shadow-lg rounded bg-charcoal-700 text-charcoal-50 placeholder-charcoal-300" placeholder="Title" type="text" name="event-type">
                 
                 <!-- Event Description -->
-                <input class="p-3 shadow-lg mb-2 rounded bg-charcoal-700 text-charcoal-50 placeholder-charcoal-300" placeholder="Description" type="text" name="event-description">
+                <input class="p-3 shadow-lg rounded bg-charcoal-700 text-charcoal-50 placeholder-charcoal-300" placeholder="Description" type="text" name="event-description">
                 
                 <!-- Event Datepicker -->
-                <div class="relative mb-2">
+                <div class="relative">
                     <input type="text" id="dateInput" placeholder="Select a date" readonly class="w-full p-3 shadow-lg rounded bg-charcoal-700 text-charcoal-50 placeholder-charcoal-300 border border-transparent cursor-pointer focus:outline-none focus:border-caleadon-600 transition">
                 
                     <!-- Hidden input to store actual date value -->
@@ -81,13 +85,8 @@
                     </div>
                 </div>
 
-                <!-- Event Color -->
-                <label for="event-color" class="text-charcoal-300 text-pretty">Event Color:</label>
-                <input id="event-color" value="#15A85F" class="appearance-none w-full h-14 bg-transparent border-none cursor-pointer shadow-lg rounded-2xl" type="color" name="event-color">
-
                 <!-- Event Icon -->
-                <label for="event-icon" class="text-charcoal-300 text-pretty">Event Icon:</label>
-                <div class="relative mb-2">
+                <div class="relative">
                     <input type="hidden" id="event-icon" name="event-icon" value="fa-solid fa-graduation-cap">
                     
                     <!-- Dropdown Button -->
@@ -146,6 +145,12 @@
                             <button type="button" class="icon-option w-12 h-12 bg-charcoal-600 hover:bg-charcoal-500 rounded transition-colors flex items-center justify-center text-2xl" data-value="fa-solid fa-lightbulb" data-unicode="&#xf0eb;">&#xf0eb;</button>
                         </div>
                     </div>
+                </div>
+
+                <!-- Event Color -->
+                <div class="flex flex-col">
+                    <label for="event-color" class="text-charcoal-300 text-pretty">Event Color:</label>
+                    <input id="event-color" value="#15A85F" class="appearance-none w-full h-14 bg-transparent border-none cursor-pointer shadow-lg rounded-2xl" type="color" name="event-color">
                 </div>
 
                 <button class="p-3 shadow-lg rounded bg-caleadon-600 hover:bg-caleadon-700 cursor-pointer text-charcoal-50 font-semibold" type="submit">Create Event</button>
