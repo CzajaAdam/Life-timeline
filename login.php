@@ -62,16 +62,16 @@
 
                     <!-- Social Login Buttons -->
                     <div class="space-y-3">
-                        <a class="w-full relative flex items-center justify-center bg-charcoal-800 border border-charcoal-700 text-charcoal-200 p-3 rounded-lg hover:bg-charcoal-750 hover:border-charcoal-600 cursor-pointer font-medium transition group">
-                            <i class="fa-brands fa-google left-5 absolute text-charcoal-400 group-hover:text-charcoal-300 transition"></i>
+                        <a class="w-full relative flex items-center justify-center bg-charcoal-900 border border-charcoal-800 text-charcoal-500 p-3 rounded-lg font-medium cursor-not-allowed opacity-60">
+                            <i class="fa-brands fa-google left-5 absolute text-charcoal-600"></i>
                             <span class="text-sm">Continue with Google</span>
                         </a>
-                        <a class="w-full relative flex items-center justify-center bg-charcoal-800 border border-charcoal-700 text-charcoal-200 p-3 rounded-lg hover:bg-charcoal-750 hover:border-charcoal-600 cursor-pointer font-medium transition group">
-                            <i class="fa-brands fa-facebook-f left-5 absolute text-charcoal-400 group-hover:text-charcoal-300 transition"></i>
+                        <a class="w-full relative flex items-center justify-center bg-charcoal-900 border border-charcoal-800 text-charcoal-500 p-3 rounded-lg font-medium cursor-not-allowed opacity-60">
+                            <i class="fa-brands fa-facebook-f left-5 absolute text-charcoal-600"></i>
                             <span class="text-sm">Continue with Facebook</span>
                         </a>
-                        <a class="w-full relative flex items-center justify-center bg-charcoal-800 border border-charcoal-700 text-charcoal-200 p-3 rounded-lg hover:bg-charcoal-750 hover:border-charcoal-600 cursor-pointer font-medium transition group">
-                            <i class="fa-brands fa-apple left-5 absolute text-charcoal-400 group-hover:text-charcoal-300 transition"></i>
+                        <a class="w-full relative flex items-center justify-center bg-charcoal-900 border border-charcoal-800 text-charcoal-500 p-3 rounded-lg font-medium cursor-not-allowed opacity-60">
+                            <i class="fa-brands fa-apple left-5 absolute text-charcoal-600"></i>
                             <span class="text-sm">Continue with Apple</span>
                         </a>
                     </div>
@@ -99,9 +99,9 @@
             </a>
         </div>
         
-        <!-- Footer -->
-        
     </div>
+    <!-- Footer -->
+    <?php include 'templates/footer.php'; ?>
 </body>
 <script src="script.js"></script>
 </html>
