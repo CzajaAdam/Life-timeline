@@ -2,3 +2,24 @@
 body {
     font-family: 'Poppins', sans-serif;
 }
+
+.icon-option {
+  font-family: 'FontAwesome';
+}
+
+[type="color"]::-webkit-color-swatch {
+  border-radius: 15px;
+  border: none;
+}
+
+[type="color"]::-moz-color-swatch {
+  border-radius: 15px;
+  border: none;
+}
+
+.datepicker {
+    display: none;
+}
+.datepicker.active {
+    display: block;
+}
