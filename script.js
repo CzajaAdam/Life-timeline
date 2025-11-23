@@ -238,3 +238,24 @@ function toggleConfirmPassword() {
         toggleIcon.classList.add('fa-eye');
     }
 }
+
+// Toggle functions for forms of event-page.php
+function toggleNotesForm() {
+    const form = document.getElementById('notes-form');
+    form.classList.toggle('hidden');
+}
+
+function togglePeopleForm() {
+    const form = document.getElementById('people-form');
+    form.classList.toggle('hidden');
+}
+
+function toggleLocationForm() {
+    const form = document.getElementById('location-form');
+    form.classList.toggle('hidden');
+}
+
+function togglePhotosForm() {
+    const form = document.getElementById('photos-form');
+    form.classList.toggle('hidden');
+}
