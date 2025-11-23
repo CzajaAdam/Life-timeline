@@ -9,7 +9,7 @@
 <html lang="en">
 <?php include 'templates/head.php'; ?>
 <body class="bg-charcoal-900">
-    <div class="container mx-auto p-4 flex flex-col justify-between min-h-screen">
+    <div class="container mx-auto p-4 flex flex-col justify-between min-h-screen pb-128 md:pb-64">
         <!-- Header -->
         <header class="flex justify-start items-center flex-col">
             <img class="h-16" src="lifelines.png" alt="">
