@@ -109,9 +109,9 @@
             </a>
         </div>
         
-        <!-- Footer -->
-        
     </div>
+    <!-- Footer -->
+    <?php include 'templates/footer.php'; ?>
 </body>
 <script src="script.js"></script>
 </html>
