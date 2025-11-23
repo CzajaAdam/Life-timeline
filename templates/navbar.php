@@ -4,11 +4,11 @@
 <nav id="nav" class="fixed left-0 top-0 h-full md:border-r border-charcoal-700 z-20">
     <div id="menu" class="h-full bg-charcoal-800 shadow-lg p-4 hidden md:flex">
         <div class="flex flex-col space-y-6 w-full">
-            <a id="close-button" onclick="menuToggle()" class="flex items-center mb-4 text-charcoal-200 hover:text-charcoal-400 md:hidden cursor-pointer">
+            <a id="close-button" onclick="menuToggle()" class="flex items-center mb-4 text-charcoal-200 hover:text-red-400 md:hidden cursor-pointer">
                 <i class="fa-solid fa-xmark text-3xl w-10 text-center flex-shrink-0"></i>
                 <span class="hidden md:inline-flex">Close</span>
             </a>
-            <a id="desktop-close-button" onclick="desktopMenuToggle()" class="flex items-center mb-4 text-charcoal-200 hover:text-charcoal-400 hidden cursor-pointer">
+            <a id="desktop-close-button" onclick="desktopMenuToggle()" class="flex items-center mb-4 text-charcoal-200 hover:text-red-400 hidden cursor-pointer">
                 <i class="fa-solid fa-xmark text-3xl w-10 text-center flex-shrink-0"></i>
                 <span class="hidden md:inline-flex">Close</span>
             </a>
@@ -29,7 +29,9 @@
                 <i class="fa-solid fa-gear text-3xl w-10 text-center flex-shrink-0"></i>
                 <span class="whitespace-nowrap hidden menu-text">Settings</span>
             </a>
-            <a href="src/logout.php" class="flex items-center text-charcoal-200 hover:text-charcoal-400">
+            <hr class="w-full border-charcoal-700">
+            <!-- Logout with a confirmation -->
+            <a href="src/logout.php" class="flex items-center text-charcoal-200 hover:text-red-400">
                 <i class="fa-solid fa-right-from-bracket text-3xl w-10 text-center flex-shrink-0"></i>
                 <span class="whitespace-nowrap hidden menu-text">Logout</span>
             </a>
