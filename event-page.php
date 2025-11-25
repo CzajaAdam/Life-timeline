@@ -76,7 +76,7 @@
                     <!-- Notes -->
                     <div class="bg-charcoal-800 p-4 rounded-lg flex justify-between items-center">
                         <div class="flex flex-col space-y-2">
-                            <p class="text-charcoal-200 text-sm">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Natus, nihil?</p>
+                            <p class="text-charcoal-200 text-sm">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis, praesentium.</p>
                             <span class="text-xs text-charcoal-500">2 days ago</span>
                         </div>
                         <button class="text-red-400 hover:text-red-500 cursor-pointer">
