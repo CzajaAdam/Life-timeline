@@ -1,27 +1,128 @@
 <?php
-    // Start session verify login
     session_start();
+    
+    // Check if user is logged in
     if (!isset($_SESSION['user']['id'])) {
         header('Location: login.php');
         exit();
     }
 
-    // Get event ID from URL
-    $eventId = $_GET['id'] ?? null;
-    
-    if (!$eventId) {
+    // Check if event ID is provided
+    if (!isset($_GET['id'])) {
         header('Location: index.php');
         exit();
     }
+    $eventId = filter_var($_GET['id'], FILTER_VALIDATE_INT);
 
-    $event = [
-        'id' => $eventId,
-        'type' => 'Graduation',
-        'description' => 'Completed my Bachelor\'s degree',
-        'date' => '2023-05-15',
-        'color' => '#4AAF75',
-        'icon' => 'fa-solid fa-graduation-cap'
+    
+
+    // Preserve session for cURL
+    session_write_close();
+
+    // Define all endpoints
+    $endpoints = [
+        'events' => 'http://localhost/Lifelines/src/events/read.php',
+        'notes' => "http://localhost/Lifelines/src/events/notes/read.php?id={$eventId}",
+        'photos' => "http://localhost/Lifelines/src/events/photos/read.php?id={$eventId}",
+        'people' => "http://localhost/Lifelines/src/events/people/read.php?id={$eventId}",
+        'location' => "http://localhost/Lifelines/src/events/locations/read.php?id={$eventId}"
     ];
+
+    // Initialize multi-handle
+    $multiHandle = curl_multi_init();
+    $handles = [];
+
+    // Create individual cURL handles
+    foreach ($endpoints as $key => $url) {
+        $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_COOKIE, session_name() . '=' . session_id());
+        
+        curl_multi_add_handle($multiHandle, $curl);
+        $handles[$key] = $curl;
+    }
+
+    // Execute all requests simultaneously
+    $running = null;
+    do {
+        curl_multi_exec($multiHandle, $running);
+        curl_multi_select($multiHandle);
+    } while ($running > 0);
+
+    // Collect results
+    $results = [];
+    foreach ($handles as $key => $curl) {
+        $results[$key] = json_decode(curl_multi_getcontent($curl), true) ?? [];
+        curl_multi_remove_handle($multiHandle, $curl);
+    }
+
+    curl_multi_close($multiHandle);
+
+    // Now you have all data available
+    $events = $results['events'];
+    $notes = $results['notes'];
+    $photos = $results['photos'];
+    $people = $results['people'];
+    $location = $results['location'];
+
+    // Find event by ID
+    $filteredEvents = array_filter($events, function($event) use ($eventId) {
+        return $event['id'] == $eventId;
+    });
+
+    if (!empty($filteredEvents)) {
+        $event = reset($filteredEvents);
+    } else {
+        $event = false;
+    }
+
+    // var_dump($notes);
+    // exit();
+
+    // If event not found return to index
+    if ($event == false){
+        header('Location: index.php?error=Event+not+found');
+        exit();
+    }
+
+    // Helper function to format time ago
+    function timeAgo($timestamp) {
+        // Convert timestamp string to Unix timestamp
+        $time = strtotime($timestamp);
+        
+        // Calculate the difference in seconds between now and the timestamp
+        $diff = time() - $time;
+        
+        // Less than 60 seconds ago
+        if ($diff < 60) return 'Just now';
+        
+        // Less than 1 hour ago (3600 seconds)
+        if ($diff < 3600) return floor($diff / 60) . ' minute' . (floor($diff / 60) != 1 ? 's' : '') . ' ago';
+        
+        // Less than 1 day ago (86400 seconds)
+        if ($diff < 86400) return floor($diff / 3600) . ' hour' . (floor($diff / 3600) != 1 ? 's' : '') . ' ago';
+        
+        // Less than 1 week ago (604800 seconds)
+        if ($diff < 604800) return floor($diff / 86400) . ' day' . (floor($diff / 86400) != 1 ? 's' : '') . ' ago';
+        
+        // Less than 1 month ago (2592000 seconds = ~30 days)
+        if ($diff < 2592000) return floor($diff / 604800) . ' week' . (floor($diff / 604800) != 1 ? 's' : '') . ' ago';
+        
+        // Less than 1 year ago (31536000 seconds = 365 days)
+        if ($diff < 31536000) return floor($diff / 2592000) . ' month' . (floor($diff / 2592000) != 1 ? 's' : '') . ' ago';
+        
+        // 1 year or more ago
+        return floor($diff / 31536000) . ' year' . (floor($diff / 31536000) != 1 ? 's' : '') . ' ago';
+    }
+
+    // Helper function to get initials from name
+    function getInitials($name) {
+        $words = explode(' ', trim($name));
+        if (count($words) >= 2) {
+            return strtoupper(substr($words[0], 0, 1) . substr($words[1], 0, 1));
+        }
+        return strtoupper(substr($name, 0, 2));
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,39 +154,43 @@
             <div class="bg-charcoal-900 border border-charcoal-800 rounded-xl shadow-xl p-6">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-xl font-bold text-charcoal-50 flex items-center gap-2">
-                        <i class="fa-solid fa-note-sticky text-caleadon-500"></i>
+                        <i class="fa-solid fa-note-sticky text-[<?php echo htmlspecialchars($event['color']); ?>]"></i>
                         Notes
                     </h2>
-                    <button onclick="toggleNotesForm()" class="text-sm cursor-pointer bg-caleadon-600 hover:bg-caleadon-500 text-charcoal-50 py-2.5 px-6 rounded-lg transition">
+                    <button onclick="toggleNotesForm()" class="text-sm cursor-pointer bg-[<?php echo htmlspecialchars($event['color']); ?>] hover:bg-[<?php echo htmlspecialchars($event['color']); ?>] text-charcoal-50 py-2.5 px-6 rounded-lg transition">
                         <i class="fa-solid fa-plus"></i> Add Note
                     </button>
                 </div>
                 
                 <!-- Add Note Form -->
-                <form id="notes-form" class="hidden mb-4" action="src/events/add-note.php" method="POST">
+                <form id="notes-form" class="hidden mb-4" action="src/events/notes/create.php" method="POST">
                     <input type="hidden" name="event-id" value="<?php echo htmlspecialchars($eventId); ?>">
-                    <textarea name="note-content" class="w-full p-3 rounded-lg bg-charcoal-800 text-charcoal-50 border border-charcoal-700 placeholder-charcoal-500 focus:outline-none focus:ring-2 focus:ring-caleadon-500 resize-none" rows="4" placeholder="Write your note here..."></textarea>
+                    <textarea name="note-content" class="w-full p-3 rounded-lg bg-charcoal-800 text-charcoal-50 border border-charcoal-700 placeholder-charcoal-500 focus:outline-none focus:ring-2 focus:ring-[<?php echo htmlspecialchars($event['color']); ?>] resize-none" rows="4" placeholder="Write your note here..."></textarea>
                     <div class="flex gap-2 mt-2">
-                        <button type="submit" class="bg-caleadon-600 hover:bg-caleadon-500 text-white px-4 py-2 rounded-lg transition text-sm">Save</button>
+                        <button type="submit" class="bg-[<?php echo htmlspecialchars($event['color']); ?>] hover:bg-[<?php echo htmlspecialchars($event['color']); ?>] text-white px-4 py-2 rounded-lg transition text-sm">Save</button>
                         <button type="button" onclick="toggleNotesForm()" class="bg-charcoal-700 hover:bg-charcoal-600 text-white px-4 py-2 rounded-lg transition text-sm">Cancel</button>
                     </div>
                 </form>
 
                 <!-- Notes List -->
                 <div class="space-y-3 max-h-96 overflow-y-auto">
-                    <!-- Notes -->
-                    <div class="bg-charcoal-800 p-4 rounded-lg flex justify-between items-center">
-                        <div class="flex flex-col space-y-2">
-                            <p class="text-charcoal-200 text-sm">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis, praesentium.</p>
-                            <span class="text-xs text-charcoal-500">2 days ago</span>
+                    <?php foreach ($notes as $note): ?>
+                        <!-- Notes -->
+                        <div class="bg-charcoal-800 p-4 rounded-lg flex justify-between items-center">
+                            <div class="flex flex-col space-y-2">
+                                <p class="text-charcoal-200 text-sm"><?php echo htmlspecialchars($note['note'])?></p>
+                                <span class="text-xs text-charcoal-500"><?php echo htmlspecialchars(timeAgo($note['created_at']))?></span>
+                            </div>
+                            <a href="http://localhost/Lifelines/src/events/notes/delete.php?id=<?php echo htmlspecialchars($note['id'])?>&event_id=<?php echo htmlspecialchars($eventId)?>" class="text-red-400 hover:text-red-500 cursor-pointer">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </a>
                         </div>
-                        <button class="text-red-400 hover:text-red-500 cursor-pointer">
-                            <i class="fa-solid fa-trash-can"></i>
-                        </button>
-                    </div>
-                    <div class="text-center text-charcoal-500 text-sm py-8">
-                        No notes yet. Click "Add Note" to create one.
-                    </div>
+                    <?php endforeach; ?>
+                    <?php if (!isset($notes[0])): ?>
+                        <div class="text-center text-charcoal-500 text-sm py-8">
+                            No notes yet. Click "Add Note" to create one.
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
 
@@ -93,25 +198,25 @@
             <div class="bg-charcoal-900 border border-charcoal-800 rounded-xl shadow-xl p-6">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-xl font-bold text-charcoal-50 flex items-center gap-2">
-                        <i class="fa-solid fa-users text-caleadon-500"></i>
+                        <i class="fa-solid fa-users text-[<?php echo htmlspecialchars($event['color']); ?>]"></i>
                         People
                     </h2>
-                    <button onclick="togglePeopleForm()" class="text-sm cursor-pointer bg-caleadon-600 hover:bg-caleadon-500 text-charcoal-50 py-2.5 px-6 rounded-lg transition">
+                    <button onclick="togglePeopleForm()" class="text-sm cursor-pointer bg-[<?php echo htmlspecialchars($event['color']); ?>] hover:bg-[<?php echo htmlspecialchars($event['color']); ?>] text-charcoal-50 py-2.5 px-6 rounded-lg transition">
                         <i class="fa-solid fa-plus"></i> Add Person
                     </button>
                 </div>
 
                 <!-- Add Person Form -->
-                <form id="people-form" class="hidden mb-4" action="src/events/add-person.php" method="POST" enctype="multipart/form-data">
+                <form id="people-form" class="hidden mb-4" action="src/events/people/create.php" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="event-id" value="<?php echo htmlspecialchars($eventId); ?>">
                     <div class="space-y-3">
-                        <input type="text" name="person-name" class="w-full p-3 rounded-lg bg-charcoal-800 text-charcoal-50 border border-charcoal-700 placeholder-charcoal-500 focus:outline-none focus:ring-2 focus:ring-caleadon-500" placeholder="Person's name">
+                        <input type="text" name="person-name" class="w-full p-3 rounded-lg bg-charcoal-800 text-charcoal-50 border border-charcoal-700 placeholder-charcoal-500 focus:outline-none focus:ring-2 focus:ring-[<?php echo htmlspecialchars($event['color']); ?>]" placeholder="Person's name">
                         <div>
                             <label class="block text-sm text-charcoal-400 mb-1">Photo (optional)</label>
-                            <input type="file" name="person-photo" accept="image/*" class="w-full p-2 rounded-lg bg-charcoal-800 text-charcoal-50 border border-charcoal-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:bg-caleadon-600 file:text-white hover:file:bg-caleadon-500">
+                            <input type="file" name="person-photo" accept="image/*" class="w-full p-2 rounded-lg bg-charcoal-800 text-charcoal-50 border border-charcoal-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:bg-[<?php echo htmlspecialchars($event['color']); ?>] file:text-white hover:file:bg-[<?php echo htmlspecialchars($event['color']); ?>]">
                         </div>
                         <div class="flex gap-2">
-                            <button type="submit" class="bg-caleadon-600 hover:bg-caleadon-500 text-white px-4 py-2 rounded-lg transition text-sm">Add</button>
+                            <button type="submit" class="bg-[<?php echo htmlspecialchars($event['color']); ?>] hover:bg-[<?php echo htmlspecialchars($event['color']); ?>] text-white px-4 py-2 rounded-lg transition text-sm">Add</button>
                             <button type="button" onclick="togglePeopleForm()" class="bg-charcoal-700 hover:bg-charcoal-600 text-white px-4 py-2 rounded-lg transition text-sm">Cancel</button>
                         </div>
                     </div>
@@ -119,19 +224,27 @@
 
                 <!-- People List -->
                 <div class="space-y-3 max-h-96 overflow-y-auto">
-                    <!-- Example people - will be dynamic -->
-                    <div class="flex items-center gap-3 bg-charcoal-800 p-3 rounded-lg">
-                        <div class="w-12 h-12 bg-caleadon-600 rounded-full flex items-center justify-center text-white font-bold">
-                            JD
+                    <?php foreach ($people as $person): ?>
+                        <div class="flex items-center gap-3 bg-charcoal-800 p-3 rounded-lg">
+                            <div class="w-12 h-12 bg-[<?php echo htmlspecialchars($event['color']); ?>] rounded-full flex items-center justify-center text-white font-bold">
+                                <?php if ($person['photo_path'] === null): ?>
+                                    <?php echo htmlspecialchars(getInitials($person['person_name'])); ?>
+                                <?php else: ?>
+                                    <img class="rounded-full w-12 h-12" src="<?php echo htmlspecialchars($person['photo_path']); ?>" 
+                                        alt="<?php echo htmlspecialchars($person['person_name']); ?>">
+                                <?php endif; ?>
+                            </div>
+                            <span class="text-charcoal-200 flex-grow"><?php echo htmlspecialchars($person['person_name'])?></span>
+                            <a href="http://localhost/Lifelines/src/events/people/delete.php?id=<?php echo htmlspecialchars($note['id'])?>&event_id=<?php echo htmlspecialchars($eventId)?>" class="text-red-400 hover:text-red-500 cursor-pointer">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </a>
                         </div>
-                        <span class="text-charcoal-200 flex-grow">John Doe</span>
-                        <button class="text-red-400 hover:text-red-500 cursor-pointer">
-                            <i class="fa-solid fa-trash-can"></i>
-                        </button>
-                    </div>
-                    <div class="text-center text-charcoal-500 text-sm py-8">
-                        No people added yet.
-                    </div>
+                    <?php endforeach; ?>
+                    <?php if (!isset($people[0])): ?>
+                        <div class="text-center text-charcoal-500 text-sm py-8">
+                            No people added yet.
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
 
@@ -139,10 +252,10 @@
             <div class="bg-charcoal-900 border border-charcoal-800 rounded-xl shadow-xl p-6">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-xl font-bold text-charcoal-50 flex items-center gap-2">
-                        <i class="fa-solid fa-location-dot text-caleadon-500"></i>
+                        <i class="fa-solid fa-location-dot text-[<?php echo htmlspecialchars($event['color']); ?>]"></i>
                         Location
                     </h2>
-                    <button onclick="toggleLocationForm()" class="text-sm cursor-pointer bg-caleadon-600 hover:bg-caleadon-500 text-charcoal-50 py-2.5 px-6 rounded-lg transition">
+                    <button onclick="toggleLocationForm()" class="text-sm cursor-pointer bg-[<?php echo htmlspecialchars($event['color']); ?>] hover:bg-[<?php echo htmlspecialchars($event['color']); ?>] text-charcoal-50 py-2.5 px-6 rounded-lg transition">
                         <i class="fa-solid fa-plus"></i> Add Location
                     </button>
                 </div>
@@ -151,10 +264,10 @@
                 <form id="location-form" class="hidden mb-4" action="src/events/add-location.php" method="POST">
                     <input type="hidden" name="event-id" value="<?php echo htmlspecialchars($eventId); ?>">
                     <div class="space-y-3">
-                        <input type="text" name="location-name" class="w-full p-3 rounded-lg bg-charcoal-800 text-charcoal-50 border border-charcoal-700 placeholder-charcoal-500 focus:outline-none focus:ring-2 focus:ring-caleadon-500" placeholder="Location name">
-                        <input type="text" name="location-address" class="w-full p-3 rounded-lg bg-charcoal-800 text-charcoal-50 border border-charcoal-700 placeholder-charcoal-500 focus:outline-none focus:ring-2 focus:ring-caleadon-500" placeholder="Address (optional)">
+                        <input type="text" name="location-name" class="w-full p-3 rounded-lg bg-charcoal-800 text-charcoal-50 border border-charcoal-700 placeholder-charcoal-500 focus:outline-none focus:ring-2 focus:ring-[<?php echo htmlspecialchars($event['color']); ?>]" placeholder="Location name">
+                        <input type="text" name="location-address" class="w-full p-3 rounded-lg bg-charcoal-800 text-charcoal-50 border border-charcoal-700 placeholder-charcoal-500 focus:outline-none focus:ring-2 focus:ring-[<?php echo htmlspecialchars($event['color']); ?>]" placeholder="Address (optional)">
                         <div class="flex gap-2">
-                            <button type="submit" class="bg-caleadon-600 hover:bg-caleadon-500 text-white px-4 py-2 rounded-lg transition text-sm">Save</button>
+                            <button type="submit" class="bg-[<?php echo htmlspecialchars($event['color']); ?>] hover:bg-[<?php echo htmlspecialchars($event['color']); ?>] text-white px-4 py-2 rounded-lg transition text-sm">Save</button>
                             <button type="button" onclick="toggleLocationForm()" class="bg-charcoal-700 hover:bg-charcoal-600 text-white px-4 py-2 rounded-lg transition text-sm">Cancel</button>
                         </div>
                     </div>
@@ -184,10 +297,10 @@
             <div class="bg-charcoal-900 border border-charcoal-800 rounded-xl shadow-xl p-6">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-xl font-bold text-charcoal-50 flex items-center gap-2">
-                        <i class="fa-solid fa-images text-caleadon-500"></i>
+                        <i class="fa-solid fa-images text-[<?php echo htmlspecialchars($event['color']); ?>]"></i>
                         Photos
                     </h2>
-                    <button onclick="togglePhotosForm()" class="text-sm cursor-pointer bg-caleadon-600 hover:bg-caleadon-500 text-charcoal-50 py-2.5 px-6 rounded-lg transition">
+                    <button onclick="togglePhotosForm()" class="text-sm cursor-pointer bg-[<?php echo htmlspecialchars($event['color']); ?>] hover:bg-[<?php echo htmlspecialchars($event['color']); ?>] text-charcoal-50 py-2.5 px-6 rounded-lg transition">
                         <i class="fa-solid fa-plus"></i> Add Photos
                     </button>
                 </div>
@@ -196,9 +309,9 @@
                 <form id="photos-form" class="hidden mb-4" action="src/events/add-photos.php" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="event-id" value="<?php echo htmlspecialchars($eventId); ?>">
                     <div class="space-y-3">
-                        <input type="file" name="photos[]" multiple accept="image/*" class="w-full p-2 rounded-lg bg-charcoal-800 text-charcoal-50 border border-charcoal-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:bg-caleadon-600 file:text-white hover:file:bg-caleadon-500">
+                        <input type="file" name="photos[]" multiple accept="image/*" class="w-full p-2 rounded-lg bg-charcoal-800 text-charcoal-50 border border-charcoal-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:bg-[<?php echo htmlspecialchars($event['color']); ?>] file:text-white hover:file:bg-[<?php echo htmlspecialchars($event['color']); ?>]">
                         <div class="flex gap-2">
-                            <button type="submit" class="bg-caleadon-600 hover:bg-caleadon-500 text-white px-4 py-2 rounded-lg transition text-sm">Upload</button>
+                            <button type="submit" class="bg-[<?php echo htmlspecialchars($event['color']); ?>] hover:bg-[<?php echo htmlspecialchars($event['color']); ?>] text-white px-4 py-2 rounded-lg transition text-sm">Upload</button>
                             <button type="button" onclick="togglePhotosForm()" class="bg-charcoal-700 hover:bg-charcoal-600 text-white px-4 py-2 rounded-lg transition text-sm">Cancel</button>
                         </div>
                     </div>

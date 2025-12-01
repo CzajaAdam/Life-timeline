@@ -2,13 +2,13 @@
     // Start session and check authentication
     session_start();
     if (!isset($_SESSION['user']['id'])) {
-        header('Location: ../../login.php');
+        header('Location: ../../../login.php');
         exit();
     }
 
     // Check if form data is set
     if (!isset($_POST['event-id'], $_POST['note-content'])) {
-        header('Location: ../../event-page.php?error=Missing+form+data');
+        header('Location: ../../../event-page.php?error=Missing+form+data');
         exit();
     }
     
@@ -19,13 +19,13 @@
     
     // Validate event ID
     if ($eventId === false || $eventId <= 0) {
-        header('Location: ../../event-page.php?error=Invalid+event+ID');
+        header('Location: ../../../event-page.php?error=Invalid+event+ID');
         exit();
     }
     
     // Validate note content length
     if (strlen($noteContent) < 1 || strlen($noteContent) > 1024) {
-        header('Location: ../../event-page.php?id=' . $eventId . '&error=Invalid Note Length');
+        header('Location: ../../../event-page.php?id=' . $eventId . '&error=Invalid Note Length');
         exit();
     }
 
@@ -40,7 +40,7 @@
     ]);
     
     if ($checkStmt->rowCount() === 0) {
-        header('Location: ../../index.php?error=Event+not+found');
+        header('Location: ../../../index.php?error=Event+not+found');
         exit();
     }
 
@@ -53,5 +53,5 @@
     ]);
 
     // Redirect back to event page after successful creation
-    header('Location: ../../event-page.php?id=' . $eventId . '&success=Note+added+successfully');
+    header('Location: ../../../event-page.php?id=' . $eventId . '&success=Note+added+successfully');
     exit();
