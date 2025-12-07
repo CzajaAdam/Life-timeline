@@ -8,31 +8,31 @@
 
     // Check if form data is set
     if (!isset($_POST['event-id'], $_POST['location-name'])) {
-        header('Location: ../../event-page.php?error=Missing+form+data');
+        header('Location: ../../../event-page.php?error=Missing+form+data');
         exit();
     }
     
     // Validate and sanitize inputs
     $eventId = filter_var($_POST['event-id'], FILTER_VALIDATE_INT);
-    $locationName = trim(filter_var($_POST['location-name'], FILTER_SANITIZE_SPECIAL_CHARS));
-    $locationAddress = isset($_POST['location-address']) ? trim(filter_var($_POST['location-address'], FILTER_SANITIZE_SPECIAL_CHARS)) : null;
+    $locationName = trim(filter_var($_POST['location-name'], FILTER_DEFAULT));
+    $locationAddress = isset($_POST['location-address']) ? trim(filter_var($_POST['location-address'], FILTER_DEFAULT)) : null;
     $userId = $_SESSION['user']['id'];
     
     // Validate event ID
     if ($eventId === false || $eventId <= 0) {
-        header('Location: ../../event-page.php?error=Invalid+event+ID');
+        header('Location: ../../../event-page.php?error=Invalid+event+ID');
         exit();
     }
     
     // Validate location name
     if (strlen($locationName) < 1 || strlen($locationName) > 255) {
-        header('Location: ../../event-page.php?id=' . $eventId . '&error=Invalid+location+name');
+        header('Location: ../../../event-page.php?id=' . $eventId . '&error=Invalid+location+name');
         exit();
     }
     
     // Validate address length if provided
     if ($locationAddress !== null && strlen($locationAddress) > 500) {
-        header('Location: ../../event-page.php?id=' . $eventId . '&error=Address+too+long');
+        header('Location: ../../../event-page.php?id=' . $eventId . '&error=Address+too+long');
         exit();
     }
 
@@ -49,7 +49,7 @@
         ]);
         
         if ($checkStmt->rowCount() === 0) {
-            header('Location: ../../index.php?error=Event+not+found');
+            header('Location: ../../../index.php?error=Event+not+found');
             exit();
         }
 
@@ -63,11 +63,11 @@
         ]);
 
         // Redirect back to event page after successful creation
-        header('Location: ../../event-page.php?id=' . $eventId . '&success=Location+added+successfully');
+        header('Location: ../../../event-page.php?id=' . $eventId . '&success=Location+added+successfully');
         exit();
         
     } catch (PDOException $e) {
         error_log($e->getMessage());
-        header('Location: ../../event-page.php?id=' . $eventId . '&error=Database+error');
+        header('Location: ../../../event-page.php?id=' . $eventId . '&error=Database+error');
         exit();
     }

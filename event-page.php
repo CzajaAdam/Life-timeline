@@ -63,7 +63,7 @@
     $notes = $results['notes'];
     $photos = $results['photos'];
     $people = $results['people'];
-    $location = $results['location'];
+    $locations = $results['location'];
 
     // Find event by ID
     $filteredEvents = array_filter($events, function($event) use ($eventId) {
@@ -235,7 +235,7 @@
                                 <?php endif; ?>
                             </div>
                             <span class="text-charcoal-200 flex-grow"><?php echo htmlspecialchars($person['person_name'])?></span>
-                            <a href="http://localhost/Lifelines/src/events/people/delete.php?id=<?php echo htmlspecialchars($note['id'])?>&event_id=<?php echo htmlspecialchars($eventId)?>" class="text-red-400 hover:text-red-500 cursor-pointer">
+                            <a href="src/events/people/delete.php?id=<?php echo htmlspecialchars($person['id'])?>&event_id=<?php echo htmlspecialchars($eventId)?>" class="text-red-400 hover:text-red-500 cursor-pointer">
                                 <i class="fa-solid fa-trash-can"></i>
                             </a>
                         </div>
@@ -261,7 +261,7 @@
                 </div>
 
                 <!-- Add Location Form -->
-                <form id="location-form" class="hidden mb-4" action="src/events/add-location.php" method="POST">
+                <form id="location-form" class="hidden mb-4" action="src/events/locations/create.php" method="POST">
                     <input type="hidden" name="event-id" value="<?php echo htmlspecialchars($eventId); ?>">
                     <div class="space-y-3">
                         <input type="text" name="location-name" class="w-full p-3 rounded-lg bg-charcoal-800 text-charcoal-50 border border-charcoal-700 placeholder-charcoal-500 focus:outline-none focus:ring-2 focus:ring-[<?php echo htmlspecialchars($event['color']); ?>]" placeholder="Location name">
@@ -275,21 +275,26 @@
 
                 <!-- Location Display -->
                 <div class="space-y-3">
-                    <!-- Example location - will be dynamic -->
-                    <div class="bg-charcoal-800 p-4 rounded-lg">
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <h3 class="text-charcoal-200 font-semibold mb-1">University Campus</h3>
-                                <p class="text-charcoal-400 text-sm">123 University Ave, City, State</p>
+
+                    <?php foreach ($locations as $location): ?>
+                        <!-- Location -->
+                        <div class="bg-charcoal-800 p-4 rounded-lg">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <h3 class="text-charcoal-200 font-semibold mb-1"><?php echo htmlspecialchars($location['location_name'])?></h3>
+                                    <p class="text-charcoal-400 text-sm"><?php echo htmlspecialchars($location['location_address'])?></p>
+                                </div>
+                                <a href="src/events/locations/delete.php?id=<?php echo htmlspecialchars($location['id'])?>&event_id=<?php echo htmlspecialchars($eventId)?>" class="text-red-400 hover:text-red-500 cursor-pointer">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </a>
                             </div>
-                            <button class="text-red-400 hover:text-red-500 cursor-pointer">
-                                <i class="fa-solid fa-trash-can"></i>
-                            </button>
                         </div>
-                    </div>
-                    <div class="text-center text-charcoal-500 text-sm py-8">
-                        No location added yet.
-                    </div>
+                    <?php endforeach; ?>
+                    <?php if (!isset($people[0])): ?>
+                        <div class="text-center text-charcoal-500 text-sm py-8">
+                            No location added yet.
+                        </div>
+                    <?php endif;?>
                 </div>
             </div>
 
@@ -306,10 +311,10 @@
                 </div>
 
                 <!-- Add Photos Form -->
-                <form id="photos-form" class="hidden mb-4" action="src/events/add-photos.php" method="POST" enctype="multipart/form-data">
+                <form id="photos-form" class="hidden mb-4" action="src/events/photos/create.php" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="event-id" value="<?php echo htmlspecialchars($eventId); ?>">
                     <div class="space-y-3">
-                        <input type="file" name="photos[]" multiple accept="image/*" class="w-full p-2 rounded-lg bg-charcoal-800 text-charcoal-50 border border-charcoal-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:bg-[<?php echo htmlspecialchars($event['color']); ?>] file:text-white hover:file:bg-[<?php echo htmlspecialchars($event['color']); ?>]">
+                        <input type="file" name="photos" multiple accept="image/*" class="w-full p-2 rounded-lg bg-charcoal-800 text-charcoal-50 border border-charcoal-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:bg-[<?php echo htmlspecialchars($event['color']); ?>] file:text-white hover:file:bg-[<?php echo htmlspecialchars($event['color']); ?>]">
                         <div class="flex gap-2">
                             <button type="submit" class="bg-[<?php echo htmlspecialchars($event['color']); ?>] hover:bg-[<?php echo htmlspecialchars($event['color']); ?>] text-white px-4 py-2 rounded-lg transition text-sm">Upload</button>
                             <button type="button" onclick="togglePhotosForm()" class="bg-charcoal-700 hover:bg-charcoal-600 text-white px-4 py-2 rounded-lg transition text-sm">Cancel</button>
@@ -319,16 +324,27 @@
 
                 <!-- Photos Grid -->
                 <div class="grid grid-cols-2 gap-3 max-h-96 overflow-y-auto">
+
                     <!-- Photos -->
                     <div class="relative group">
-                        <img src="lifelines.png" alt="Event photo" class="w-full h-32 object-contain aspect-square rounded-lg">
-                        <button class="absolute top-2 right-2 bg-red-400 hover:bg-red-500 aspect-square w-10 cursor-pointer text-white p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
-                            <i class="fa-solid fa-trash-can"></i>
-                        </button>
+
+                        <!-- Photo -->
+                        <?php foreach ($photos as $photo): ?>
+                            <img src="lifelines.png" alt="Event photo" class="w-full h-32 object-contain aspect-square rounded-lg">
+                            <a href="src/events/photos/delete.php?id=<?php echo htmlspecialchars($photo['id'])?>&eventId=<?php echo htmlspecialchars($eventId)?>" class="absolute top-2 right-2 bg-red-400 hover:bg-red-500 aspect-square w-10 cursor-pointer text-white p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </a>
+                        <?php endforeach; ?>
+
                     </div>
-                    <div class="col-span-2 text-center text-charcoal-500 text-sm py-8">
-                        No photos added yet.
-                    </div>
+
+                    <!-- Display when no photos are added -->
+                    <?php if (!isset($photos[0])): ?>
+                        <div class="col-span-2 text-center text-charcoal-500 text-sm py-8">
+                            No photos added yet.
+                        </div>
+                    <?php endif; ?>
+
                 </div>
             </div>
 
