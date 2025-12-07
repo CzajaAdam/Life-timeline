@@ -75,7 +75,7 @@
                             <span class="text-sm">Continue with Apple</span>
                         </a>
                     </div>
-
+                        
                     <div class="text-red-400 mt-4 text-center text-sm">
                         <?php
                             if (isset($_GET['error'])) {

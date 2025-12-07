@@ -205,7 +205,7 @@
                     <div class="p-5 md:w-[60%] flex justify-between items-center gap-4">
                         <div class="flex flex-col">
                             <div class="text-[1.2rem] leading-relaxed uppercase font-semibold text-[<?php echo htmlspecialchars($event['color']); ?>] tracking-widest mb-2">
-                                <a href="event-page.php">
+                                <a href="event-page.php?id=<?php echo urlencode($event['id']); ?>" class="underline">
                                     <?php echo htmlspecialchars($event['type']); ?>
                                 </a>
                             </div>
