@@ -72,15 +72,15 @@
 
                     <!-- Social Registration Buttons -->
                     <div class="space-y-3">
-                        <a class="w-full relative flex items-center justify-center bg-charcoal-800 border border-charcoal-700 text-charcoal-200 p-3 rounded-lg hover:bg-charcoal-750 hover:border-charcoal-600 cursor-pointer font-medium transition group">
+                        <a class="w-full relative flex items-center justify-center bg-charcoal-800 border border-charcoal-700 text-charcoal-200 cursor-not-allowed opacity-60 p-3 rounded-lg hover:bg-charcoal-750 hover:border-charcoal-600 font-medium transition group">
                             <i class="fa-brands fa-google left-5 absolute text-charcoal-400 group-hover:text-charcoal-300 transition"></i>
                             <span class="text-sm">Sign up with Google</span>
                         </a>
-                        <a class="w-full relative flex items-center justify-center bg-charcoal-800 border border-charcoal-700 text-charcoal-200 p-3 rounded-lg hover:bg-charcoal-750 hover:border-charcoal-600 cursor-pointer font-medium transition group">
+                        <a class="w-full relative flex items-center justify-center bg-charcoal-800 border border-charcoal-700 text-charcoal-200 cursor-not-allowed opacity-60 p-3 rounded-lg hover:bg-charcoal-750 hover:border-charcoal-600 font-medium transition group">
                             <i class="fa-brands fa-facebook-f left-5 absolute text-charcoal-400 group-hover:text-charcoal-300 transition"></i>
                             <span class="text-sm">Sign up with Facebook</span>
                         </a>
-                        <a class="w-full relative flex items-center justify-center bg-charcoal-800 border border-charcoal-700 text-charcoal-200 p-3 rounded-lg hover:bg-charcoal-750 hover:border-charcoal-600 cursor-pointer font-medium transition group">
+                        <a class="w-full relative flex items-center justify-center bg-charcoal-800 border border-charcoal-700 text-charcoal-200 cursor-not-allowed opacity-60 p-3 rounded-lg hover:bg-charcoal-750 hover:border-charcoal-600 font-medium transition group">
                             <i class="fa-brands fa-apple left-5 absolute text-charcoal-400 group-hover:text-charcoal-300 transition"></i>
                             <span class="text-sm">Sign up with Apple</span>
                         </a>
