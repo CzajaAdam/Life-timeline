@@ -230,8 +230,7 @@
                                 <?php if ($person['photo_path'] === null): ?>
                                     <?php echo htmlspecialchars(getInitials($person['person_name'])); ?>
                                 <?php else: ?>
-                                    <img class="rounded-full w-12 h-12" src="<?php echo htmlspecialchars($person['photo_path']); ?>" 
-                                        alt="<?php echo htmlspecialchars($person['person_name']); ?>">
+                                    <img class="rounded-full object-cover aspect-square w-12" src="<?php echo htmlspecialchars($person['photo_path']); ?>" alt="<?php echo htmlspecialchars($person['person_name']); ?>">
                                 <?php endif; ?>
                             </div>
                             <span class="text-charcoal-200 flex-grow"><?php echo htmlspecialchars($person['person_name'])?></span>
