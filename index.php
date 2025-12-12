@@ -166,6 +166,7 @@
             </form>
         </div>
 
+        <!-- Border line -->
         <div class="flex justify-center w-full">
             <hr class="w-1/3 md:w-1/2 border-charcoal-800 my-16">
         </div>
@@ -183,47 +184,52 @@
                 $currentIndex++;
                 $isLastEvent = ($currentIndex === $eventCount);
             ?>
-                <!-- Timeline Event -->
-                <div class="relative flex flex-col md:flex-row bg-charcoal-100 mb-5 rounded-lg" style="box-shadow: 0 30px 60px -12px <?php echo htmlspecialchars($event['color']); ?>40, 0 18px 36px -18px <?php echo htmlspecialchars($event['color']); ?>4D, 0 -12px 36px -8px <?php echo htmlspecialchars($event['color']); ?>0A;">
-                    <div class="relative flex flex-col justify-center items-center">
-                        <!-- Vertical line -->
-                        <?php if (!$isLastEvent): ?>
-                            <div class="hidden md:block absolute w-0.5 h-3/7 bg-[<?php echo htmlspecialchars($event['color']); ?>] top-7/8 -left-[3.563rem] -z-10"></div>
-                        <?php endif; ?>
-                        <!-- Circle -->
-                        <div class="hidden md:flex md:items-center md:justify-center absolute w-20 h-20 bg-[<?php echo htmlspecialchars($event['color']); ?>]/20 rounded-full -left-24 top-1/2 -translate-y-1/2 border-2 border-[<?php echo htmlspecialchars($event['color']); ?>]">
-                            <i class="<?php echo htmlspecialchars($event['icon']); ?> text-[2.5rem] text-[<?php echo htmlspecialchars($event['color']); ?>] hidden md:inline-flex"></i>
-                        </div>
-                    </div>
 
-                    <div class="relative flex items-center justify-center bg-[<?php echo htmlspecialchars($event['color']); ?>] rounded-t-lg md:rounded-l-lg md:rounded-tr-none p-5 md:w-[40%]">
-                        <div class="text-[<?php echo htmlspecialchars($event['color']); ?>] text-2xl font-semibold whitespace-nowrap brightness-[0.3]">
-                            <?php echo htmlspecialchars($event['date']); ?>
-                        </div>
+                <!-- Timeline Event -->
+                <div class="relative mb-5">
+                    <!-- Circle -->
+                    <div class="hidden md:flex md:items-center md:justify-center absolute w-20 h-20 bg-[<?php echo htmlspecialchars($event['color']); ?>]/20 rounded-full left-0 top-1/2 -translate-y-1/2 border-2 border-[<?php echo htmlspecialchars($event['color']); ?>] z-10">
+                        <i class="<?php echo htmlspecialchars($event['icon']); ?> text-[2.5rem] text-[<?php echo htmlspecialchars($event['color']); ?>] hidden md:inline-flex"></i>
                     </div>
                     
-                    <div class="p-5 md:w-[60%] flex justify-between items-center gap-4">
-                        <div class="flex flex-col">
-                            <div class="text-[1.2rem] leading-relaxed uppercase font-semibold text-[<?php echo htmlspecialchars($event['color']); ?>] tracking-widest mb-2">
-                                <a href="event-page.php?id=<?php echo urlencode($event['id']); ?>" class="underline">
-                                    <?php echo htmlspecialchars($event['type']); ?>
-                                </a>
+                    <!-- Vertical line -->
+                    <?php if (!$isLastEvent): ?>
+                        <div class="hidden md:block absolute w-0.5 h-3/7 bg-[<?php echo htmlspecialchars($event['color']); ?>] top-[87.5%] left-[2.437rem] -z-10"></div>
+                    <?php endif; ?>
+
+                    <!-- Clickable card -->
+                    <a href="event-page.php?id=<?php echo urlencode($event['id']); ?>" class="block md:ml-24">
+                        <div class="group relative flex flex-col md:flex-row bg-charcoal-100 rounded-lg hover:scale-[1.02] transition-transform duration-200" style="box-shadow: 0 15px 30px -6px <?php echo htmlspecialchars($event['color']); ?>40, 0 9px 18px -9px <?php echo htmlspecialchars($event['color']); ?>4D, 0 -6px 18px -4px <?php echo htmlspecialchars($event['color']); ?>0A;">
+                            <div class="relative flex items-center justify-center bg-[<?php echo htmlspecialchars($event['color']); ?>] rounded-t-lg md:rounded-l-lg md:rounded-tr-none p-5 md:w-[40%]">
+                                <div class="text-[<?php echo htmlspecialchars($event['color']); ?>] text-2xl font-semibold whitespace-nowrap brightness-[0.3]">
+                                    <?php echo htmlspecialchars($event['date']); ?>
+                                </div>
                             </div>
-                            <div class="text-[#525f7f]">
-                                <p>
-                                    <?php echo htmlspecialchars($event['description']); ?>
-                                </p>
+                            
+                            <div class="p-5 md:w-[60%] flex justify-between items-center gap-4 rounded-br-lg" style="background-color: <?php echo htmlspecialchars($event['color']); ?>20;">
+                                <div class="flex flex-col">
+                                    <div class="text-[1.25rem] font-extrabold leading-relaxed uppercase font-semibold text-[<?php echo htmlspecialchars($event['color']); ?>] tracking-wide mb-2">
+                                        <?php echo htmlspecialchars($event['type']); ?>
+                                    </div>
+                                    <div class="text-[#525f7f]">
+                                        <p>
+                                            <?php echo htmlspecialchars($event['description']); ?>
+                                        </p>
+                                    </div>
+                                </div>
+                                <span onclick="event.preventDefault(); event.stopPropagation(); window.location.href='src/events/delete.php?id=<?php echo urlencode($event['id']); ?>';" class="ml-auto">
+                                    <i class="fa-solid fa-trash-can cursor-pointer text-red-500 text-3xl hover:text-red-600 transition"></i>
+                                </span>
                             </div>
                         </div>
-                        <a href="src/events/delete.php?id=<?php echo urlencode($event['id']); ?>" class="ml-auto">
-                            <i class="fa-solid fa-trash-can cursor-pointer text-red-500 text-3xl hover:text-red-600 transition"></i>
-                        </a>
-                    </div>
+                    </a>
                 </div>
+
             <?php endforeach; ?>
         </div>
 
-    </div>  
+    </div>
+
     <!-- Footer -->
     <?php include 'templates/footer.php'; ?>
     <script src="script.js"></script>
