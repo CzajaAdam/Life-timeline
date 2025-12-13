@@ -15,12 +15,16 @@
     $events = curl_exec($curl);
 
     $events = json_decode($events, true) ?? [];
+
+    // Get icons json
+    $icons = file_get_contents('icons.json');
+    $icons = json_decode($icons, true) ?? [];
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <?php include 'templates/head.php'; ?>
 <body class="bg-charcoal-950 relative">
-    <div class="container mx-auto flex flex-col justify-between min-h-screen p-4 pb-128 md:pb-64">
+    <div class="container mx-auto flex flex-col min-h-screen p-4 pb-24">
 
         <!-- Navbar -->
         <?php include 'templates/navbar.php'; ?>
@@ -111,47 +115,9 @@
                     <!-- Dropdown Grid -->
                     <div id="icon-grid" class="hidden absolute left-1/2 -translate-x-1/2 w-96 z-10 mt-2 bg-charcoal-800 border border-charcoal-700 rounded-lg shadow-lg p-3">
                         <div class="grid grid-cols-6 gap-2">
-                            <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300 selected ring-2 ring-caleadon-500" data-value="fa-solid fa-graduation-cap" data-unicode="&#xf19d;">&#xf19d;</button>
-                            <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300" data-value="fa-solid fa-ring" data-unicode="&#xf70b;">&#xf70b;</button>
-                            <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300" data-value="fa-solid fa-heart" data-unicode="&#xf004;">&#xf004;</button>
-                            <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300" data-value="fa-solid fa-baby" data-unicode="&#xf77c;">&#xf77c;</button>
-                            <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300" data-value="fa-solid fa-house" data-unicode="&#xf015;">&#xf015;</button>
-                            <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300" data-value="fa-solid fa-briefcase" data-unicode="&#xf0b1;">&#xf0b1;</button>
-                            
-                            <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300" data-value="fa-solid fa-plane" data-unicode="&#xf072;">&#xf072;</button>
-                            <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300" data-value="fa-solid fa-globe" data-unicode="&#xf0ac;">&#xf0ac;</button>
-                            <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300" data-value="fa-solid fa-mountain" data-unicode="&#xf6fc;">&#xf6fc;</button>
-                            <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300" data-value="fa-solid fa-car" data-unicode="&#xf1b9;">&#xf1b9;</button>
-                            <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300" data-value="fa-solid fa-book" data-unicode="&#xf02d;">&#xf02d;</button>
-                            <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300" data-value="fa-solid fa-university" data-unicode="&#xf19c;">&#xf19c;</button>
-                            
-                            <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300" data-value="fa-solid fa-bullhorn" data-unicode="&#xf0a1;">&#xf0a1;</button>
-                            <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300" data-value="fa-solid fa-trophy" data-unicode="&#xf091;">&#xf091;</button>
-                            <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300" data-value="fa-solid fa-heartbeat" data-unicode="&#xf21e;">&#xf21e;</button>
-                            <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300" data-value="fa-solid fa-person-running" data-unicode="&#xf70c;">&#xf70c;</button>
-                            <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300" data-value="fa-solid fa-star" data-unicode="&#xf005;">&#xf005;</button>
-                            <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300" data-value="fa-solid fa-music" data-unicode="&#xf001;">&#xf001;</button>
-                            
-                            <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300" data-value="fa-solid fa-camera" data-unicode="&#xf030;">&#xf030;</button>
-                            <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300" data-value="fa-solid fa-palette" data-unicode="&#xf53f;">&#xf53f;</button>
-                            <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300" data-value="fa-solid fa-gamepad" data-unicode="&#xf11b;">&#xf11b;</button>
-                            <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300" data-value="fa-solid fa-users" data-unicode="&#xf0c0;">&#xf0c0;</button>
-                            <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300" data-value="fa-solid fa-building" data-unicode="&#xf1ad;">&#xf1ad;</button>
-                            <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300" data-value="fa-solid fa-gift" data-unicode="&#xf06b;">&#xf06b;</button>
-                            
-                            <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300" data-value="fa-solid fa-cake-candles" data-unicode="&#xf1fd;">&#xf1fd;</button>
-                            <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300" data-value="fa-solid fa-bolt" data-unicode="&#xf0e7;">&#xf0e7;</button>
-                            <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300" data-value="fa-solid fa-fire" data-unicode="&#xf06d;">&#xf06d;</button>
-                            <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300" data-value="fa-solid fa-flag-checkered" data-unicode="&#xf11e;">&#xf11e;</button>
-                            <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300" data-value="fa-solid fa-medal" data-unicode="&#xf5a2;">&#xf5a2;</button>
-                            <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300" data-value="fa-solid fa-moon" data-unicode="&#xf186;">&#xf186;</button>
-                            
-                            <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300" data-value="fa-solid fa-sun" data-unicode="&#xf185;">&#xf185;</button>
-                            <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300" data-value="fa-solid fa-champagne-glasses" data-unicode="&#xf79f;">&#xf79f;</button>
-                            <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300" data-value="fa-solid fa-dog" data-unicode="&#xf6d3;">&#xf6d3;</button>
-                            <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300" data-value="fa-solid fa-tree" data-unicode="&#xf1bb;">&#xf1bb;</button>
-                            <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300" data-value="fa-solid fa-umbrella-beach" data-unicode="&#xf5ca;">&#xf5ca;</button>
-                            <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300" data-value="fa-solid fa-lightbulb" data-unicode="&#xf0eb;">&#xf0eb;</button>
+                            <?php foreach ($icons as $key => $icon): ?>
+                                <button type="button" class="icon-option w-12 h-12 bg-charcoal-700 hover:bg-charcoal-600 rounded transition-colors flex items-center justify-center text-2xl text-charcoal-300 <?php echo (($key == 0) ? 'selected ring-2 ring-caleadon-500' : '')?>" data-value="<?php echo $icon['value']?>" data-unicode="<?php echo $icon['unicode']?>"><?php echo $icon['unicode']?></button>
+                            <?php endforeach; ?>
                         </div>
                     </div>
                 </div>
@@ -176,14 +142,7 @@
             
             <h2 class="text-charcoal-100 text-2xl mb-8 text-4xl text-center font-bold">Your <span class="text-caleadon-500">LifeLine!</span></h2>
 
-            <?php 
-                $eventCount = count($events);
-                $currentIndex = 0;
-            ?>
-            <?php foreach ($events as $event): 
-                $currentIndex++;
-                $isLastEvent = ($currentIndex === $eventCount);
-            ?>
+            <?php foreach ($events as $key => $event): ?>
 
                 <!-- Timeline Event -->
                 <div class="relative mb-5">
@@ -193,7 +152,7 @@
                     </div>
                     
                     <!-- Vertical line -->
-                    <?php if (!$isLastEvent): ?>
+                    <?php if ($key != count($events) - 1): ?>
                         <div class="hidden md:block absolute w-0.5 h-3/7 bg-[<?php echo htmlspecialchars($event['color']); ?>] top-[87.5%] left-[2.437rem] -z-10"></div>
                     <?php endif; ?>
 
@@ -206,7 +165,7 @@
                                 </div>
                             </div>
                             
-                            <div class="p-5 md:w-[60%] flex justify-between items-center gap-4 rounded-br-lg" style="background-color: <?php echo htmlspecialchars($event['color']); ?>20;">
+                            <div class="p-5 md:w-[60%] flex justify-between items-center gap-4 rounded-br-lg bg-[<?php echo htmlspecialchars($event['color'])?>]/15">
                                 <div class="flex flex-col">
                                     <div class="text-[1.25rem] font-extrabold leading-relaxed uppercase font-semibold text-[<?php echo htmlspecialchars($event['color']); ?>] tracking-wide mb-2">
                                         <?php echo htmlspecialchars($event['type']); ?>
