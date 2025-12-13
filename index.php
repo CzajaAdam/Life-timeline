@@ -37,7 +37,7 @@
         </header>
 
         <!-- Welcome Section -->
-        <div class="flex flex-col justify-start grow pt-2 items-center px-4">
+        <section class="flex flex-col justify-start grow pt-2 items-center px-4">
             <h2 class="text-charcoal-300 text-2xl mb-4">Welcome, <?php echo htmlspecialchars($_SESSION['user']['name']); ?>!</h2>
             <p class="text-charcoal-400 text-center max-w-md text-lg text-pretty mb-4">This is your dashboard. From here, you can manage your LifeLines and access all the features available to you.</p>
             
@@ -130,7 +130,7 @@
 
                 <button class="p-3 rounded-lg bg-caleadon-600 hover:bg-caleadon-500 cursor-pointer text-white font-bold shadow-lg hover:shadow-caleadon-600/20 transition" type="submit">Create Event</button>
             </form>
-        </div>
+        </section>
 
         <!-- Border line -->
         <div class="flex justify-center w-full">
@@ -138,7 +138,7 @@
         </div>
 
         <!-- Timeline Events -->
-        <div class="flex flex-col w-full md:w-[50vw] mx-auto px-4 md:px-0">
+        <section class="flex flex-col w-full md:w-[50vw] mx-auto px-4 md:px-0">
             
             <h2 class="text-charcoal-100 text-2xl mb-8 text-4xl text-center font-bold">Your <span class="text-caleadon-500">LifeLine!</span></h2>
 
@@ -176,7 +176,7 @@
                                         </p>
                                     </div>
                                 </div>
-                                <span onclick="event.preventDefault(); event.stopPropagation(); window.location.href='src/events/delete.php?id=<?php echo urlencode($event['id']); ?>';" class="ml-auto">
+                                <span aria-label="Delete Event" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='src/events/delete.php?id=<?php echo urlencode($event['id']); ?>';" class="ml-auto">
                                     <i class="fa-solid fa-trash-can cursor-pointer text-red-500 text-3xl hover:text-red-600 transition"></i>
                                 </span>
                             </div>
@@ -185,7 +185,7 @@
                 </div>
 
             <?php endforeach; ?>
-        </div>
+        </section>
 
     </div>
 
