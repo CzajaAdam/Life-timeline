@@ -322,19 +322,27 @@
                 </form>
 
                 <!-- Photos Grid -->
-                <div class="grid grid-cols-2 gap-3 max-h-96 overflow-y-auto">
+                <div id="gallery" class="grid grid-cols-2 gap-3 max-h-96 overflow-y-auto">
 
-                    <!-- Photo -->
                     <?php foreach ($photos as $photo): ?>
                         <div class="relative group">
-                            <img src="<?php echo $photo['photo_path']?>" alt="Event photo" class="w-full h-32 object-contain aspect-square rounded-lg">
-                            <a href="src/events/photos/delete.php?id=<?php echo htmlspecialchars($photo['id'])?>&eventId=<?php echo htmlspecialchars($eventId)?>" class="flex justify-center items-center absolute top-2 right-2 bg-red-400 hover:bg-red-500 aspect-square w-10 cursor-pointer text-white p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
+
+                            <!-- Get photo width and height -->
+                            <?php [$width, $height] = getimagesize($photo['photo_path']); ?>
+
+                            <!-- Clickable image for fullscreen carousel -->
+                            <a class="pswp-item" href="<?php echo $photo['photo_path']; ?>" data-pswp-width="<?php echo $width; ?>" data-pswp-height="<?php echo $height; ?>" target="_blank">
+                                <img src="<?php echo $photo['photo_path']; ?>" alt="Event photo" class="w-full h-32 object-contain aspect-square rounded-lg cursor-pointer">
+                            </a>
+
+                            <!-- Delete button -->
+                            <a href="src/events/photos/delete.php?id=<?php echo htmlspecialchars($photo['id']); ?>&eventId=<?php echo htmlspecialchars($eventId); ?>" class="flex justify-center items-center absolute top-2 right-2 bg-red-400 hover:bg-red-500 aspect-square w-10 cursor-pointer text-white p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity z-10">
                                 <i class="fa-solid fa-trash-can"></i>
                             </a>
+
                         </div>
                     <?php endforeach; ?>
 
-                    <!-- Display when no photos are added -->
                     <?php if (!isset($photos[0])): ?>
                         <div class="col-span-2 text-center text-charcoal-500 text-sm py-8">
                             No photos added yet.
@@ -342,6 +350,7 @@
                     <?php endif; ?>
 
                 </div>
+
             </div>
 
         </div>
@@ -357,6 +366,18 @@
 
     <!-- Footer -->
     <?php include 'templates/footer.php'; ?>
+    <link rel="stylesheet" href="https://unpkg.com/photoswipe@5/dist/photoswipe.css">
+    <script type="module">
+        import PhotoSwipeLightbox from 'https://unpkg.com/photoswipe@5/dist/photoswipe-lightbox.esm.js';
+
+        const lightbox = new PhotoSwipeLightbox({
+            gallery: '#gallery',
+            children: 'a.pswp-item',
+            pswpModule: () => import('https://unpkg.com/photoswipe@5/dist/photoswipe.esm.js')
+        });
+
+        lightbox.init();
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
