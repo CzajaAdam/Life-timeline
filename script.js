@@ -25,131 +25,6 @@ function desktopMenuToggle() {
     closeButton.classList.toggle('hidden');
 }
 
-// Datepicker functionality
-if (document.getElementById('dateInput')) {
-    const dateInput = document.getElementById('dateInput');
-    const dateValue = document.getElementById('dateValue');
-    const datepicker = document.getElementById('datepicker');
-    const monthYear = document.getElementById('monthYear');
-    const prevMonth = document.getElementById('prevMonth');
-    const nextMonth = document.getElementById('nextMonth');
-    const daysContainer = document.getElementById('daysContainer');
-    
-    let currentDate = new Date();
-    let selectedDate = null;
-    
-    const months = [
-        'January', 'February', 'March', 'April', 'May', 'June',
-        'July', 'August', 'September', 'October', 'November', 'December'
-    ];
-    
-    // Toggle and close datepicker
-    dateInput.addEventListener('click', () => {
-        datepicker.classList.toggle('active');
-    });
-    
-    document.addEventListener('click', (e) => {
-        if (!dateInput.contains(e.target) && !datepicker.contains(e.target)) {
-            datepicker.classList.remove('active');
-        }
-    });
-    
-    // Month navigation
-    prevMonth.addEventListener('click', () => {
-        currentDate.setMonth(currentDate.getMonth() - 1);
-        renderCalendar();
-    });
-    
-    nextMonth.addEventListener('click', () => {
-        currentDate.setMonth(currentDate.getMonth() + 1);
-        renderCalendar();
-    });
-    
-    // Create day element helper
-    function createDayElement(day, date, isCurrentMonth) {
-        const dayElement = document.createElement('div');
-        const today = new Date();
-        
-        dayElement.textContent = day;
-        dayElement.className = `aspect-square flex items-center justify-center rounded-lg cursor-pointer text-sm transition ${
-            isCurrentMonth 
-                ? 'text-charcoal-50 hover:bg-charcoal-700' 
-                : 'text-charcoal-500 hover:bg-charcoal-700/50'
-        }`;
-    
-        // Highlight today
-        if (isCurrentMonth && date.toDateString() === today.toDateString()) {
-            dayElement.classList.add('bg-charcoal-700');
-        }
-    
-        // Highlight selected date
-        if (selectedDate && date.toDateString() === selectedDate.toDateString()) {
-            dayElement.classList.remove('bg-charcoal-700', 'hover:bg-charcoal-700');
-            dayElement.classList.add('bg-caleadon-600', 'hover:bg-caleadon-700');
-        }
-    
-        dayElement.addEventListener('click', () => selectDate(date));
-        
-        return dayElement;
-    }
-    
-    // Select date helper
-    function selectDate(date) {
-        selectedDate = date;
-        dateInput.value = formatDate(date);
-        dateValue.value = date.toISOString().split('T')[0];
-        datepicker.classList.remove('active');
-        renderCalendar();
-    }
-    
-    // Render calendar
-    function renderCalendar() {
-        const year = currentDate.getFullYear();
-        const month = currentDate.getMonth();
-    
-        monthYear.textContent = `${months[month]} ${year}`;
-    
-        const firstDay = new Date(year, month, 1).getDay();
-        const daysInMonth = new Date(year, month + 1, 0).getDate();
-        const prevMonthDays = new Date(year, month, 0).getDate();
-    
-        daysContainer.innerHTML = '';
-    
-        // Previous month days
-        for (let i = firstDay - 1; i >= 0; i--) {
-            const prevDay = prevMonthDays - i;
-            const date = new Date(year, month - 1, prevDay);
-            daysContainer.appendChild(createDayElement(prevDay, date, false));
-        }
-    
-        // Current month days
-        for (let day = 1; day <= daysInMonth; day++) {
-            const date = new Date(year, month, day);
-            daysContainer.appendChild(createDayElement(day, date, true));
-        }
-    
-        // Next month days to fill grid
-        const totalCells = daysContainer.children.length;
-        const remainingCells = 42 - totalCells;
-        
-        for (let day = 1; day <= remainingCells; day++) {
-            const date = new Date(year, month + 1, day);
-            daysContainer.appendChild(createDayElement(day, date, false));
-        }
-    }
-    
-    function formatDate(date) {
-        return date.toLocaleDateString('en-US', { 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
-        });
-    }
-    
-    // Initialize
-    renderCalendar();
-}
-
 // Icon dropdown functionality
 if (document.getElementById('icon-dropdown-btn')) {
     // Toggle dropdown
@@ -194,6 +69,8 @@ if (document.getElementById('icon-dropdown-btn')) {
             const value = this.dataset.value;
             document.getElementById('event-icon').value = value;
             document.getElementById('selected-icon-name').innerHTML = '<i class="' + value + ' text-2xl"></i>';
+            document.getElementById('selected-icon-name').classList.remove('text-charcoal-500');
+            document.getElementById('selected-icon-name').classList.add('text-charcoal-200');
             
             // Close dropdown
             document.getElementById('icon-grid').classList.add('hidden');
@@ -259,3 +136,12 @@ function togglePhotosForm() {
     const form = document.getElementById('photos-form');
     form.classList.toggle('hidden');
 }
+
+// Datepicker
+const picker = new FlexiDatepicker('#dateInput', {
+    mode: 'single',
+    minDate: new Date(),
+    onSelect: (date) => {
+    document.getElementById('dateValue').value = date;
+    }
+});

@@ -7,6 +7,7 @@ body {
   font-family: 'FontAwesome';
 }
 
+/* Color Picker Styles */
 [type="color"]::-webkit-color-swatch {
   border-radius: 15px;
   border: none;
@@ -17,9 +18,96 @@ body {
   border: none;
 }
 
-.datepicker {
-    display: none;
+/* Date Picker Styles */
+
+/* Main container and overlay - charcoal-900 background with charcoal-800 border */
+.mrdp-container, .mrdp-picker-overlay{
+  background-color: #141519 !important; 
+  border: #1E1F24 1px solid !important;
 }
-.datepicker.active {
-    display: block;
+
+/* Header separator - charcoal-800 border */
+.mrdp-header{
+  border-bottom: #1E1F24 1px solid !important;
+}
+
+/* Day headers and picker headers - charcoal-300 */
+.mrdp-day-header, .mrdp-picker-header{
+  color: #B8B9BF !important;
+}
+
+/* Today's date indicator - caleadon-600 (primary action color) */
+.mrdp-day-cell.today{
+  color: #4AAF75 !important;
+  border: #4AAF75 1px solid !important;
+}
+
+/* Regular day cells - charcoal-400 */
+.mrdp-day-cell{
+  color: #8E8F97 !important;
+}
+
+/* Day cell hover state - charcoal-800 */
+.mrdp-day-cell:hover{
+  background-color: #1E1F24 !important;
+}
+
+/* Navigation buttons - caleadon-600 */
+.mrdp-nav-btn, .mrdp-year-nav{
+  color: #4AAF75 !important;
+}
+
+/* Navigation button hover - charcoal-800 */
+.mrdp-nav-btn:hover, .mrdp-year-nav:hover{
+  background-color: #1E1F24 !important;
+}
+
+/* Month/Year selector button - charcoal-700 background */
+.mrdp-month-year-btn{
+  background-color: #2B2D33 !important;
+  border: #1E1F24 1px solid !important;
+  color: #B8B9BF !important;
+}
+
+/* Month/Year button hover - caleadon-600 */
+.mrdp-month-year-btn:hover{
+  color: #4AAF75 !important;
+}
+
+/* Clear button and picker items - charcoal-800 */
+.mrdp-btn-clear, .mrdp-picker-item{
+  background-color: #1E1F24 !important;
+  border: #1E1F24 1px solid !important;
+}
+
+/* Clear button hover - charcoal-700 */
+.mrdp-btn-clear:hover{
+  background-color: #2B2D33 !important;
+}
+
+/* Picker item hover - caleadon-600 */
+.mrdp-picker-item:hover{
+  color: #4AAF75 !important;
+}
+
+/* Active picker item - caleadon-600 with border */
+.mrdp-picker-item.active{
+  color: #4AAF75 !important;
+  border: #4AAF75 1px solid !important;
+}
+
+/* Selected date - caleadon-600 background */
+.mrdp-day-cell.selected-start.selected-end{
+  background-color: #4AAF75 !important;
+  border: #4AAF75 1px solid !important;
+}
+
+/* Picker item hover shadow - caleadon-600 */
+.mrdp-picker-item:hover{
+  box-shadow: 0 2px 4px #4AAF75 !important;
+}
+
+/* Current year indicator - caleadon-600 */
+.mrdp-picker-item.current-year{
+  color: #4AAF75 !important;
 }
