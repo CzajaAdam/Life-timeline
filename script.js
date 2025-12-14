@@ -141,6 +141,7 @@ function togglePhotosForm() {
 const picker = new FlexiDatepicker('#dateInput', {
     mode: 'single',
     minDate: new Date(),
+    dateFormat: 'yyyy-MM-dd',
     onSelect: (date) => {
     document.getElementById('dateValue').value = date;
     }

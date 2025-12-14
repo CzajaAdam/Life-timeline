@@ -26,6 +26,13 @@ body {
   border: #1E1F24 1px solid !important;
 }
 
+.mrdp-container {
+  position: absolute !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  margin-top: 0.5rem !important; /* adds small gap below input */
+}
+
 /* Header separator - charcoal-800 border */
 .mrdp-header{
   border-bottom: #1E1F24 1px solid !important;
