@@ -18,7 +18,7 @@
     $eventDescription = filter_var($_POST['event-description'], FILTER_DEFAULT);
     $eventColor = filter_var($_POST['event-color'], FILTER_DEFAULT);
     $eventIcon = filter_var($_POST['event-icon'], FILTER_DEFAULT);
-    
+
     // Validate Date
     $dateTime = DateTime::createFromFormat('Y-m-d', $eventDate);
     if (!$dateTime || $dateTime->format('Y-m-d') !== $eventDate) {
