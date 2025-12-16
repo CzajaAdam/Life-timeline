@@ -142,8 +142,7 @@
                             <!-- Dropdown Button -->
                             <button type="button" id="icon-dropdown-btn" class="w-full p-4 cursor-pointer rounded-xl bg-charcoal-800 border-2 border-charcoal-700 flex items-center justify-between hover:border-charcoal-600 focus:outline-none focus:ring-2 focus:ring-caleadon-500 focus:border-caleadon-500 transition-all" aria-expanded="false" aria-controls="icon-grid" aria-haspopup="true" aria-label="Select event icon">
                                 <span class="flex items-center gap-3">
-                                    <span id="selected-icon-preview" class="text-2xl">🎓</span>
-                                    <span id="selected-icon-name" class="text-charcoal-400">
+                                    <span id="selected-icon-name" class="text-charcoal-500">
                                         Select Icon
                                     </span>
                                 </span>
@@ -153,10 +152,10 @@
                             </button>
                             
                             <!-- Dropdown Grid -->
-                            <div id="icon-grid" class="hidden absolute left-1/2 -translate-x-1/2 w-full max-w-md z-10 mt-2 bg-charcoal-800 border-2 border-charcoal-700 rounded-xl shadow-2xl p-4" role="listbox" aria-label="Icon options">
-                                <div class="grid grid-cols-6 gap-2 max-h-64 overflow-y-auto">
+                            <div id="icon-grid" class="hidden absolute left-1/2 -translate-x-1/2 w-75 md:w-500 max-w-md z-10 mt-2 bg-charcoal-800 border-2 border-charcoal-700 rounded-xl shadow-2xl p-4" role="listbox" aria-label="Icon options">
+                                <div class="grid grid-cols-5 md:grid-cols-6 gap-2">
                                     <?php foreach ($icons as $key => $icon): ?>
-                                        <button type="button" class="cursor-pointer icon-option w-14 h-14 bg-charcoal-700 hover:bg-charcoal-600 rounded-lg transition-all duration-200 flex items-center justify-center text-2xl text-charcoal-300 hover:scale-110 <?php echo (($key == 0) ? 'selected ring-2 ring-caleadon-500' : '')?>" data-value="<?php echo htmlspecialchars($icon['value'])?>" data-unicode="<?php echo htmlspecialchars($icon['unicode'])?>" role="option" aria-selected="<?php echo (($key == 0) ? 'true' : 'false')?>" aria-label="Icon <?php echo $key + 1?>">
+                                        <button type="button" class="cursor-pointer mx-auto icon-option w-12 h-12 md:w-14 md:h-14 bg-charcoal-700 hover:bg-charcoal-600 rounded-lg transition-all duration-200 flex items-center justify-center text-2xl text-charcoal-300 hover:scale-110 <?php echo (($key == 0) ? 'selected ring-2 ring-caleadon-500' : '')?>" data-value="<?php echo htmlspecialchars($icon['value'])?>" data-unicode="<?php echo htmlspecialchars($icon['unicode'])?>" role="option" aria-selected="<?php echo (($key == 0) ? 'true' : 'false')?>" aria-label="Icon <?php echo $key + 1?>">
                                             <?php echo $icon['unicode']?>
                                         </button>
                                     <?php endforeach; ?>
@@ -235,10 +234,7 @@
                                         <div class="relative flex items-center justify-center bg-gradient-to-br from-[<?php echo htmlspecialchars($event['color']); ?>] to-[<?php echo htmlspecialchars($event['color']); ?>]/80 p-8 md:w-[35%] md:min-h-[160px]">
                                             <div class="text-center">
                                                 <time datetime="<?php echo htmlspecialchars($event['date']); ?>" class="text-white text-3xl md:text-4xl font-bold drop-shadow-lg">
-                                                    <?php 
-                                                    $date = new DateTime($event['date']);
-                                                    echo $date->format('M d');
-                                                    ?>
+                                                    <?php $date = new DateTime($event['date']); echo $date->format('M d');?>
                                                 </time>
                                                 <div class="text-white/80 text-xl font-semibold mt-1">
                                                     <?php echo $date->format('Y'); ?>
