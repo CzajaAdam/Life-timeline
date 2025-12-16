@@ -76,9 +76,6 @@
         $event = false;
     }
 
-    // var_dump($notes);
-    // exit();
-
     // If event not found return to index
     if ($event == false){
         header('Location: index.php?error=Event+not+found');
