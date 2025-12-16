@@ -146,3 +146,40 @@ const picker = new FlexiDatepicker('#dateInput', {
     document.getElementById('dateValue').value = date;
     }
 });
+
+const preview = document.getElementById('event-color');
+const popover = document.getElementById('color-picker-popover');
+const hiddenInput = document.getElementById('event-color-value');
+
+// Create picker
+const colorPicker = new iro.ColorPicker(popover, {
+    width: 220,
+    color: '#4AAF75',
+    layout: [
+        { component: iro.ui.Box },
+        { component: iro.ui.Slider, options: { sliderType: 'hue' } }
+    ]
+});
+
+// Update preview + form value
+colorPicker.on('color:change', (color) => {
+    preview.style.backgroundColor = color.hexString;
+    hiddenInput.value = color.hexString;
+});
+
+// Toggle picker
+preview.addEventListener('click', (e) => {
+    const rect = preview.getBoundingClientRect();
+
+    popover.style.top = `${rect.bottom + window.scrollY + 8}px`;
+    popover.style.left = `${rect.left + window.scrollX}px`;
+
+    popover.classList.toggle('hidden');
+});
+
+// Close on outside click
+document.addEventListener('click', (e) => {
+    if (!popover.contains(e.target) && !preview.contains(e.target)) {
+        popover.classList.add('hidden');
+    }
+});

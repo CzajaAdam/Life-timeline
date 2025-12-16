@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="stylesheet" href="https://unpkg.com/photoswipe@5/dist/photoswipe.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/leoanangmh/flexidatepicker@1.1.5/dist/flexidatepicker.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
 
     <style type="text/tailwindcss">
         @theme {

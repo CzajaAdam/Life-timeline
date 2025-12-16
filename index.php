@@ -53,27 +53,27 @@
 
                 <!-- Stats Overview -->
                 <?php if (!empty($events)): ?>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full mb-8">
-                    <div class="bg-charcoal-900 rounded-xl p-6 border border-charcoal-800 text-center">
-                        <div class="text-4xl font-bold text-caleadon-500 mb-2"><?php echo count($events); ?></div>
-                        <div class="text-charcoal-400 text-sm uppercase tracking-wide">Total Events</div>
-                    </div>
-                    <div class="bg-charcoal-900 rounded-xl p-6 border border-charcoal-800 text-center">
-                        <div class="text-4xl font-bold text-caleadon-500 mb-2">
-                            <?php 
-                            $dates = array_map(fn($e) => strtotime($e['date']), $events);
-                            echo date('Y', min($dates)); 
-                            ?>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full mb-8">
+                        <div class="bg-charcoal-900 rounded-xl p-6 border border-charcoal-800 text-center">
+                            <div class="text-4xl font-bold text-caleadon-500 mb-2"><?php echo count($events); ?></div>
+                            <div class="text-charcoal-400 text-sm uppercase tracking-wide">Total Events</div>
                         </div>
-                        <div class="text-charcoal-400 text-sm uppercase tracking-wide">First Event</div>
-                    </div>
-                    <div class="bg-charcoal-900 rounded-xl p-6 border border-charcoal-800 text-center">
-                        <div class="text-4xl font-bold text-caleadon-500 mb-2">
-                            <?php echo date('Y', max($dates)); ?>
+                        <div class="bg-charcoal-900 rounded-xl p-6 border border-charcoal-800 text-center">
+                            <div class="text-4xl font-bold text-caleadon-500 mb-2">
+                                <?php 
+                                $dates = array_map(fn($e) => strtotime($e['date']), $events);
+                                echo date('Y', min($dates)); 
+                                ?>
+                            </div>
+                            <div class="text-charcoal-400 text-sm uppercase tracking-wide">First Event</div>
                         </div>
-                        <div class="text-charcoal-400 text-sm uppercase tracking-wide">Latest Event</div>
+                        <div class="bg-charcoal-900 rounded-xl p-6 border border-charcoal-800 text-center">
+                            <div class="text-4xl font-bold text-caleadon-500 mb-2">
+                                <?php echo date('Y', max($dates)); ?>
+                            </div>
+                            <div class="text-charcoal-400 text-sm uppercase tracking-wide">Latest Event</div>
+                        </div>
                     </div>
-                </div>
                 <?php endif; ?>
                 
                 <!-- Create Event Button with improved styling -->
@@ -90,7 +90,7 @@
                             <i class="fa-solid fa-calendar-plus text-caleadon-500 mr-2" aria-hidden="true"></i>
                             New Life Event
                         </h3>
-                        <button type="button" onclick="toggleCreateEventForm()" class="text-charcoal-400 hover:text-charcoal-200 transition">
+                        <button type="button" onclick="toggleCreateEventForm()" class="text-charcoal-400 hover:text-red-400 cursor-pointer transition">
                             <i class="fa-solid fa-times text-2xl" aria-hidden="true"></i>
                         </button>
                     </div>
@@ -164,13 +164,22 @@
                         </div>
 
                         <!-- Event Color -->
-                        <div class="flex flex-col form-group">
-                            <label for="event-color" class="block text-charcoal-200 text-base mb-2 font-semibold">
+                        <div class="flex flex-col form-group relative">
+                            <label class="block text-charcoal-200 text-base mb-2 font-semibold">
                                 <i class="fa-solid fa-palette text-caleadon-500 mr-2" aria-hidden="true"></i>
                                 Event Color
                             </label>
-                            <input id="event-color" value="#4AAF75" class="appearance-none w-full h-14 bg-transparent cursor-pointer rounded-xl border-2 border-charcoal-700 hover:border-charcoal-600 transition-all" type="color" name="event-color" aria-label="Choose event color">
+
+                            <!-- Color preview -->
+                            <div id="event-color" class="bg-caleadon-500 w-full h-15 rounded-xl border-2 border-charcoal-700 hover:border-charcoal-600 transition-all cursor-pointer" aria-label="Choose event color"></div>
+
+                            <!-- Hidden value for form -->
+                            <input type="hidden" name="event-color" id="event-color-value" value="#4AAF75">
                         </div>
+
+                        <!-- Picker popover -->
+                        <div id="color-picker-popover" class="hidden absolute border-2 rounded-2xl border-charcoal-700"></div>
+
                     </div>
 
                     <button class="w-full p-4 rounded-xl bg-gradient-to-r from-caleadon-600 to-caleadon-500 hover:from-caleadon-500 hover:to-caleadon-400 cursor-pointer text-white font-bold shadow-lg hover:shadow-caleadon-500/50 transition-all duration-300 hover:scale-[1.02] text-lg mt-4" type="submit">
@@ -212,13 +221,13 @@
                             <!-- Timeline Event -->
                             <li class="relative mb-8 md:mb-12 timeline-item" style="animation-delay: <?php echo $key * 100; ?>ms">
                                 <!-- Circle with pulse effect -->
-                                <div class="hidden md:flex md:items-center md:justify-center absolute w-24 h-24 bg-[<?php echo htmlspecialchars($event['color']); ?>]/20 rounded-full left-0 top-1/2 -translate-y-1/2 border-4 border-[<?php echo htmlspecialchars($event['color']); ?>] z-10 shadow-lg hover:scale-110 transition-transform duration-300" aria-hidden="true">
+                                <div class="hidden md:flex md:items-center md:justify-center absolute w-24 h-24 bg-[<?php echo htmlspecialchars($event['color']); ?>]/20 rounded-full left-0 top-1/2 -translate-y-1/2 border-4 border-[<?php echo htmlspecialchars($event['color']); ?>] z-10 shadow-lg" aria-hidden="true">
                                     <i class="<?php echo htmlspecialchars($event['icon']); ?> text-[2.75rem] text-[<?php echo htmlspecialchars($event['color']); ?>]" aria-hidden="true"></i>
                                 </div>
                                 
                                 <!-- Vertical line with gradient -->
                                 <?php if ($key != count($events) - 1): ?>
-                                    <div class="hidden md:block absolute w-1 h-[calc(100%+2rem)] top-[87.5%] left-[2.875rem] -z-10 rounded-full" style="background: linear-gradient(to bottom, <?php echo htmlspecialchars($event['color']); ?>, <?php echo htmlspecialchars($events[$key + 1]['color']); ?>);" aria-hidden="true"></div>
+                                    <div class="hidden md:block absolute w-1 h-[calc(50%+2.2rem)] top-[79%] left-[2.875rem] -z-10 rounded-full" style="background: linear-gradient(to bottom, <?php echo htmlspecialchars($event['color']); ?>, <?php echo htmlspecialchars($events[$key + 1]['color']); ?>);" aria-hidden="true"></div>
                                 <?php endif; ?>
 
                                 <!-- Clickable card with enhanced design -->
@@ -252,7 +261,7 @@
                                                     <?php echo htmlspecialchars($event['description']); ?>
                                                 </p>
                                             </div>
-                                            <button onclick="event.preventDefault(); event.stopPropagation(); if(confirm('Are you sure you want to delete this event?')) window.location.href='src/events/delete.php?id=<?php echo urlencode($event['id']); ?>';" class="ml-auto shrink-0 w-12 h-12 rounded-xl bg-charcoal-700 hover:bg-red-500/20 flex items-center justify-center transition-all duration-300 group/delete" type="button" aria-label="Delete <?php echo htmlspecialchars($event['type']); ?> event">
+                                            <button onclick="event.preventDefault(); event.stopPropagation(); if(confirm('Are you sure you want to delete this event?')) window.location.href='src/events/delete.php?id=<?php echo urlencode($event['id']); ?>';" class="ml-auto shrink-0 w-12 h-12 rounded-xl bg-charcoal-700 hover:bg-red-500/20 flex cursor-pointer items-center justify-center transition-all duration-300 group/delete" type="button" aria-label="Delete <?php echo htmlspecialchars($event['type']); ?> event">
                                                 <i class="fa-solid fa-trash-can text-red-500 text-xl group-hover/delete:scale-110 transition-transform" aria-hidden="true"></i>
                                             </button>
                                         </div>
