@@ -186,9 +186,9 @@
                                         <p class="text-charcoal-200 text-sm leading-relaxed"><?php echo htmlspecialchars($note['note'])?></p>
                                         <span class="text-xs text-charcoal-500"><?php echo htmlspecialchars(timeAgo($note['created_at']))?></span>
                                     </div>
-                                    <a href="http://localhost/Lifelines/src/events/notes/delete.php?id=<?php echo htmlspecialchars($note['id'])?>&event_id=<?php echo htmlspecialchars($eventId)?>" class="text-red-400 hover:text-red-500 cursor-pointer transition flex-shrink-0">
+                                    <button onclick="openDeleteModal('note', <?php echo htmlspecialchars($note['id']); ?>, 'http://localhost/Lifelines/src/events/notes/delete.php?id=<?php echo htmlspecialchars($note['id'])?>&event_id=<?php echo htmlspecialchars($eventId)?>')" class="text-red-400 hover:text-red-500 cursor-pointer transition flex-shrink-0 hover:scale-110">
                                         <i class="fa-solid fa-trash-can"></i>
-                                    </a>
+                                    </button>
                                 </div>
                             <?php endforeach; ?>
                             <?php if (!isset($notes[0])): ?>
@@ -240,9 +240,9 @@
                                         <?php endif; ?>
                                     </div>
                                     <span class="text-charcoal-200 flex-grow font-semibold"><?php echo htmlspecialchars($person['person_name'])?></span>
-                                    <a href="src/events/people/delete.php?id=<?php echo htmlspecialchars($person['id'])?>&event_id=<?php echo htmlspecialchars($eventId)?>" class="text-red-400 hover:text-red-500 cursor-pointer transition flex-shrink-0">
+                                    <button onclick="openDeleteModal('person', <?php echo htmlspecialchars($person['id']); ?>, 'src/events/people/delete.php?id=<?php echo htmlspecialchars($person['id'])?>&event_id=<?php echo htmlspecialchars($eventId)?>')" class="text-red-400 hover:text-red-500 cursor-pointer transition flex-shrink-0 hover:scale-110">
                                         <i class="fa-solid fa-trash-can"></i>
-                                    </a>
+                                    </button>
                                 </div>
                             <?php endforeach; ?>
                             <?php if (!isset($people[0])): ?>
@@ -288,9 +288,9 @@
                                             <h3 class="text-charcoal-200 font-semibold mb-1"><?php echo htmlspecialchars($location['location_name'])?></h3>
                                             <p class="text-charcoal-400 text-sm"><?php echo htmlspecialchars($location['location_address'])?></p>
                                         </div>
-                                        <a href="src/events/locations/delete.php?id=<?php echo htmlspecialchars($location['id'])?>&event_id=<?php echo htmlspecialchars($eventId)?>" class="text-red-400 hover:text-red-500 cursor-pointer transition flex-shrink-0">
+                                        <button onclick="openDeleteModal('location', <?php echo htmlspecialchars($location['id']); ?>, 'src/events/locations/delete.php?id=<?php echo htmlspecialchars($location['id'])?>&event_id=<?php echo htmlspecialchars($eventId)?>')" class="text-red-400 hover:text-red-500 cursor-pointer transition flex-shrink-0 hover:scale-110">
                                             <i class="fa-solid fa-trash-can"></i>
-                                        </a>
+                                        </button>
                                     </div>
                                 </div>
                             <?php endforeach; ?>
@@ -344,9 +344,9 @@
                                 </a>
 
                                 <!-- Delete button -->
-                                <a href="src/events/photos/delete.php?id=<?php echo htmlspecialchars($photo['id']); ?>&eventId=<?php echo htmlspecialchars($eventId); ?>" class="flex justify-center items-center absolute top-2 right-2 bg-red-500 hover:bg-red-600 aspect-square w-10 cursor-pointer text-white p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity z-10 shadow-lg">
+                                <button onclick="openDeleteModal('photo', <?php echo htmlspecialchars($photo['id']); ?>, 'src/events/photos/delete.php?id=<?php echo htmlspecialchars($photo['id']); ?>&eventId=<?php echo htmlspecialchars($eventId); ?>')" class="flex justify-center items-center absolute top-2 right-2 bg-red-500 hover:bg-red-600 aspect-square w-10 cursor-pointer text-white p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity z-10 shadow-lg hover:scale-110">
                                     <i class="fa-solid fa-trash-can"></i>
-                                </a>
+                                </button>
 
                             </div>
                         <?php endforeach; ?>
@@ -373,6 +373,9 @@
         </div>
 
     </div> 
+
+    <!-- Delete Confirmation Modal -->
+    <?php include 'templates/delete-modal.php'; ?>
 
     <!-- Footer -->
     <?php include 'templates/footer.php'; ?>

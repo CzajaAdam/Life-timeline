@@ -217,6 +217,73 @@ function initFormValidation() {
     window.eventFormValidator = validator;
 }
 
+// Delete modal management
+
+let deleteData = {
+    type: null,
+    id: null,
+    url: null,
+    name: null
+};
+
+function openDeleteModal(type, id, url, name = null) {
+    deleteData = { type, id, url, name };
+    
+    // Update modal text based on type
+    const typeLabels = {
+        'note': 'note',
+        'person': 'person',
+        'location': 'location',
+        'photo': 'photo',
+        'event': 'event'
+    };
+    
+    // Use name if provided (for events), otherwise use type label
+    const displayText = name ? `"${name}"` : typeLabels[type] || 'item';
+    
+    // Update the appropriate element based on what's available
+    const itemTypeElement = document.getElementById('deleteItemType');
+    const itemNameElement = document.getElementById('deleteItemName');
+    
+    if (itemNameElement) {
+        itemNameElement.textContent = displayText;
+    } else if (itemTypeElement) {
+        itemTypeElement.textContent = displayText;
+    }
+    
+    document.getElementById('deleteModal').classList.remove('hidden');
+}
+
+function closeDeleteModal() {
+    document.getElementById('deleteModal').classList.add('hidden');
+    deleteData = { type: null, id: null, url: null, name: null };
+}
+
+function confirmDelete() {
+    if (deleteData.url) {
+        window.location.href = deleteData.url;
+    }
+}
+
+function initDeleteModal() {
+    const modal = document.getElementById('deleteModal');
+    if (!modal) return;
+    
+    // Close modal on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeDeleteModal();
+        }
+    });
+    
+    // Close modal on outside click
+    modal.addEventListener('click', (e) => {
+        if (e.target.id === 'deleteModal') {
+            closeDeleteModal();
+        }
+    });
+}
+
 // Initialization
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -224,4 +291,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initDatepicker();
     initColorPicker();
     initFormValidation();
+    initDeleteModal();
 });
