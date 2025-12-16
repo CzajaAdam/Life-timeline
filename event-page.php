@@ -76,9 +76,6 @@
         $event = false;
     }
 
-    // var_dump($notes);
-    // exit();
-
     // If event not found return to index
     if ($event == false){
         header('Location: index.php?error=Event+not+found');
@@ -128,241 +125,254 @@
 <html lang="en">
 <?php include 'templates/head.php'; ?>
 <body class="bg-charcoal-950 relative">
-    <div class="container mx-auto flex flex-col justify-between min-h-screen p-4 pb-128 md:pb-64">
+    <div class="container mx-auto flex flex-col min-h-screen p-4 pb-24">
 
         <!-- Navbar -->
         <?php include 'templates/navbar.php'; ?>
 
         <!-- Event Header -->
-        <header class="flex justify-start items-center flex-col mb-8">
-            <div class="flex items-center gap-4 mb-4">
-                <div class="w-16 h-16 bg-[<?php echo htmlspecialchars($event['color']); ?>]/20 rounded-full border-2 border-[<?php echo htmlspecialchars($event['color']); ?>] flex items-center justify-center">
-                    <i class="<?php echo htmlspecialchars($event['icon']); ?> text-3xl text-[<?php echo htmlspecialchars($event['color']); ?>]"></i>
+        <header class="flex justify-start items-center flex-col pt-8 pb-4 animate-fade-in" role="banner">
+            <div class="bg-gradient-to-br from-charcoal-900 to-charcoal-800 rounded-2xl p-8 md:p-10 border border-charcoal-700 shadow-xl w-full max-w-4xl mb-8">
+                <div class="flex flex-col md:flex-row items-start md:items-center gap-6 mb-6">
+                    <div class="w-24 h-24 bg-[<?php echo htmlspecialchars($event['color']); ?>]/20 rounded-2xl border-2 border-[<?php echo htmlspecialchars($event['color']); ?>] flex items-center justify-center flex-shrink-0 shadow-lg">
+                        <i class="<?php echo htmlspecialchars($event['icon']); ?> text-5xl text-[<?php echo htmlspecialchars($event['color']); ?>]"></i>
+                    </div>
+                    <div class="flex-grow">
+                        <h1 class="text-4xl md:text-5xl font-bold text-charcoal-50 mb-2 tracking-tight"><?php echo htmlspecialchars($event['type']); ?></h1>
+                        <p class="text-charcoal-400 text-lg font-semibold"><?php echo htmlspecialchars($event['date']); ?></p>
+                    </div>
                 </div>
-                <div>
-                    <h1 class="text-3xl font-bold text-charcoal-50"><?php echo htmlspecialchars($event['type']); ?></h1>
-                    <p class="text-charcoal-400"><?php echo htmlspecialchars($event['date']); ?></p>
-                </div>
+                <p class="text-charcoal-300 text-base leading-relaxed"><?php echo htmlspecialchars($event['description']); ?></p>
             </div>
-            <p class="text-charcoal-300 text-center max-w-2xl"><?php echo htmlspecialchars($event['description']); ?></p>
         </header>
 
-        <!-- Main Content Grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-7xl mx-auto w-full">
-            
-            <!-- Notes Panel -->
-            <div class="bg-charcoal-900 border border-charcoal-800 rounded-xl shadow-xl p-6">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-xl font-bold text-charcoal-50 flex items-center gap-2">
-                        <i class="fa-solid fa-note-sticky text-[<?php echo htmlspecialchars($event['color']); ?>]"></i>
-                        Notes
-                    </h2>
-                    <button onclick="toggleNotesForm()" class="text-sm cursor-pointer bg-[<?php echo htmlspecialchars($event['color']); ?>] hover:bg-[<?php echo htmlspecialchars($event['color']); ?>] text-charcoal-50 py-2.5 px-6 rounded-lg transition">
-                        <i class="fa-solid fa-plus"></i> Add Note
-                    </button>
-                </div>
+        <!-- Main Content -->
+        <main role="main" class="flex-grow">
+            <section class="flex flex-col justify-start items-center px-4 py-8 max-w-5xl mx-auto w-full" aria-labelledby="event-details-heading">
                 
-                <!-- Add Note Form -->
-                <form id="notes-form" class="hidden mb-4" action="src/events/notes/create.php" method="POST">
-                    <input type="hidden" name="event-id" value="<?php echo htmlspecialchars($eventId); ?>">
-                    <textarea name="note-content" class="w-full p-3 rounded-lg bg-charcoal-800 text-charcoal-50 border border-charcoal-700 placeholder-charcoal-500 focus:outline-none focus:ring-2 focus:ring-[<?php echo htmlspecialchars($event['color']); ?>] resize-none" rows="4" placeholder="Write your note here..."></textarea>
-                    <div class="flex gap-2 mt-2">
-                        <button type="submit" class="bg-[<?php echo htmlspecialchars($event['color']); ?>] hover:bg-[<?php echo htmlspecialchars($event['color']); ?>] text-white px-4 py-2 rounded-lg transition text-sm">Save</button>
-                        <button type="button" onclick="toggleNotesForm()" class="bg-charcoal-700 hover:bg-charcoal-600 text-white px-4 py-2 rounded-lg transition text-sm">Cancel</button>
-                    </div>
-                </form>
-
-                <!-- Notes List -->
-                <div class="space-y-3 max-h-96 overflow-y-auto">
-                    <?php foreach ($notes as $note): ?>
-                        <!-- Notes -->
-                        <div class="bg-charcoal-800 p-4 rounded-lg flex justify-between items-center">
-                            <div class="flex flex-col space-y-2">
-                                <p class="text-charcoal-200 text-sm"><?php echo htmlspecialchars($note['note'])?></p>
-                                <span class="text-xs text-charcoal-500"><?php echo htmlspecialchars(timeAgo($note['created_at']))?></span>
+                <!-- Main Content Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 w-full mb-8">
+                    
+                    <!-- Notes Panel -->
+                    <div class="bg-charcoal-900 border border-charcoal-800 rounded-2xl shadow-xl p-6 md:p-8">
+                        <div class="flex justify-between items-center mb-6">
+                            <h2 class="text-xl md:text-2xl font-bold text-charcoal-50 flex items-center gap-3">
+                                <i class="fa-solid fa-note-sticky text-[<?php echo htmlspecialchars($event['color']); ?>] text-2xl"></i>
+                                Notes
+                            </h2>
+                            <button onclick="toggleNotesForm()" class="text-sm cursor-pointer bg-gradient-to-r from-[<?php echo htmlspecialchars($event['color']); ?>] to-[<?php echo htmlspecialchars($event['color']); ?>]/80 hover:from-[<?php echo htmlspecialchars($event['color']); ?>]/90 hover:to-[<?php echo htmlspecialchars($event['color']); ?>] text-white py-2 px-4 rounded-lg transition-all duration-300 font-semibold shadow-lg hover:shadow-[<?php echo htmlspecialchars($event['color']); ?>]/50">
+                                <i class="fa-solid fa-plus"></i> Add
+                            </button>
+                        </div>
+                        
+                        <!-- Add Note Form -->
+                        <form id="notes-form" class="hidden mb-6 animate-slide-down" action="src/events/notes/create.php" method="POST">
+                            <input type="hidden" name="event-id" value="<?php echo htmlspecialchars($eventId); ?>">
+                            <textarea name="note-content" class="w-full p-4 rounded-xl bg-charcoal-800 text-charcoal-50 border-2 border-charcoal-700 placeholder-charcoal-500 focus:outline-none focus:ring-2 focus:ring-[<?php echo htmlspecialchars($event['color']); ?>] focus:border-[<?php echo htmlspecialchars($event['color']); ?>] resize-none transition-all" rows="4" placeholder="Write your note here..."></textarea>
+                            <div class="flex gap-2 mt-3">
+                                <button type="submit" class="bg-gradient-to-r from-[<?php echo htmlspecialchars($event['color']); ?>] to-[<?php echo htmlspecialchars($event['color']); ?>]/80 hover:from-[<?php echo htmlspecialchars($event['color']); ?>]/90 hover:to-[<?php echo htmlspecialchars($event['color']); ?>] text-white px-4 py-2 rounded-lg transition-all text-sm font-semibold shadow-lg">Save</button>
+                                <button type="button" onclick="toggleNotesForm()" class="bg-charcoal-700 hover:bg-charcoal-600 text-white px-4 py-2 rounded-lg transition text-sm font-semibold">Cancel</button>
                             </div>
-                            <a href="http://localhost/Lifelines/src/events/notes/delete.php?id=<?php echo htmlspecialchars($note['id'])?>&event_id=<?php echo htmlspecialchars($eventId)?>" class="text-red-400 hover:text-red-500 cursor-pointer">
-                                <i class="fa-solid fa-trash-can"></i>
-                            </a>
-                        </div>
-                    <?php endforeach; ?>
-                    <?php if (!isset($notes[0])): ?>
-                        <div class="text-center text-charcoal-500 text-sm py-8">
-                            No notes yet. Click "Add Note" to create one.
-                        </div>
-                    <?php endif; ?>
-                </div>
-            </div>
+                        </form>
 
-            <!-- People Panel -->
-            <div class="bg-charcoal-900 border border-charcoal-800 rounded-xl shadow-xl p-6">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-xl font-bold text-charcoal-50 flex items-center gap-2">
-                        <i class="fa-solid fa-users text-[<?php echo htmlspecialchars($event['color']); ?>]"></i>
-                        People
-                    </h2>
-                    <button onclick="togglePeopleForm()" class="text-sm cursor-pointer bg-[<?php echo htmlspecialchars($event['color']); ?>] hover:bg-[<?php echo htmlspecialchars($event['color']); ?>] text-charcoal-50 py-2.5 px-6 rounded-lg transition">
-                        <i class="fa-solid fa-plus"></i> Add Person
-                    </button>
-                </div>
-
-                <!-- Add Person Form -->
-                <form id="people-form" class="hidden mb-4" action="src/events/people/create.php" method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="event-id" value="<?php echo htmlspecialchars($eventId); ?>">
-                    <div class="space-y-3">
-                        <input type="text" name="person-name" class="w-full p-3 rounded-lg bg-charcoal-800 text-charcoal-50 border border-charcoal-700 placeholder-charcoal-500 focus:outline-none focus:ring-2 focus:ring-[<?php echo htmlspecialchars($event['color']); ?>]" placeholder="Person's name">
-                        <div>
-                            <label class="block text-sm text-charcoal-400 mb-1">Photo (optional)</label>
-                            <input type="file" name="person-photo" accept="image/*" class="w-full p-2 rounded-lg bg-charcoal-800 text-charcoal-50 border border-charcoal-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:bg-[<?php echo htmlspecialchars($event['color']); ?>] file:text-white hover:file:bg-[<?php echo htmlspecialchars($event['color']); ?>]">
-                        </div>
-                        <div class="flex gap-2">
-                            <button type="submit" class="bg-[<?php echo htmlspecialchars($event['color']); ?>] hover:bg-[<?php echo htmlspecialchars($event['color']); ?>] text-white px-4 py-2 rounded-lg transition text-sm">Add</button>
-                            <button type="button" onclick="togglePeopleForm()" class="bg-charcoal-700 hover:bg-charcoal-600 text-white px-4 py-2 rounded-lg transition text-sm">Cancel</button>
-                        </div>
-                    </div>
-                </form>
-
-                <!-- People List -->
-                <div class="space-y-3 max-h-96 overflow-y-auto">
-                    <?php foreach ($people as $person): ?>
-                        <div class="flex items-center gap-3 bg-charcoal-800 p-3 rounded-lg">
-                            <div class="w-12 h-12 bg-[<?php echo htmlspecialchars($event['color']); ?>] rounded-full flex items-center justify-center text-white font-bold">
-                                <?php if ($person['photo_path'] === null): ?>
-                                    <?php echo htmlspecialchars(getInitials($person['person_name'])); ?>
-                                <?php else: ?>
-                                    <img class="rounded-full object-cover aspect-square w-12" src="<?php echo htmlspecialchars($person['photo_path']); ?>" alt="<?php echo htmlspecialchars($person['person_name']); ?>">
-                                <?php endif; ?>
-                            </div>
-                            <span class="text-charcoal-200 flex-grow"><?php echo htmlspecialchars($person['person_name'])?></span>
-                            <a href="src/events/people/delete.php?id=<?php echo htmlspecialchars($person['id'])?>&event_id=<?php echo htmlspecialchars($eventId)?>" class="text-red-400 hover:text-red-500 cursor-pointer">
-                                <i class="fa-solid fa-trash-can"></i>
-                            </a>
-                        </div>
-                    <?php endforeach; ?>
-                    <?php if (!isset($people[0])): ?>
-                        <div class="text-center text-charcoal-500 text-sm py-8">
-                            No people added yet.
-                        </div>
-                    <?php endif; ?>
-                </div>
-            </div>
-
-            <!-- Location Panel -->
-            <div class="bg-charcoal-900 border border-charcoal-800 rounded-xl shadow-xl p-6">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-xl font-bold text-charcoal-50 flex items-center gap-2">
-                        <i class="fa-solid fa-location-dot text-[<?php echo htmlspecialchars($event['color']); ?>]"></i>
-                        Location
-                    </h2>
-                    <button onclick="toggleLocationForm()" class="text-sm cursor-pointer bg-[<?php echo htmlspecialchars($event['color']); ?>] hover:bg-[<?php echo htmlspecialchars($event['color']); ?>] text-charcoal-50 py-2.5 px-6 rounded-lg transition">
-                        <i class="fa-solid fa-plus"></i> Add Location
-                    </button>
-                </div>
-
-                <!-- Add Location Form -->
-                <form id="location-form" class="hidden mb-4" action="src/events/locations/create.php" method="POST">
-                    <input type="hidden" name="event-id" value="<?php echo htmlspecialchars($eventId); ?>">
-                    <div class="space-y-3">
-                        <input type="text" name="location-name" class="w-full p-3 rounded-lg bg-charcoal-800 text-charcoal-50 border border-charcoal-700 placeholder-charcoal-500 focus:outline-none focus:ring-2 focus:ring-[<?php echo htmlspecialchars($event['color']); ?>]" placeholder="Location name">
-                        <input type="text" name="location-address" class="w-full p-3 rounded-lg bg-charcoal-800 text-charcoal-50 border border-charcoal-700 placeholder-charcoal-500 focus:outline-none focus:ring-2 focus:ring-[<?php echo htmlspecialchars($event['color']); ?>]" placeholder="Address (optional)">
-                        <div class="flex gap-2">
-                            <button type="submit" class="bg-[<?php echo htmlspecialchars($event['color']); ?>] hover:bg-[<?php echo htmlspecialchars($event['color']); ?>] text-white px-4 py-2 rounded-lg transition text-sm">Save</button>
-                            <button type="button" onclick="toggleLocationForm()" class="bg-charcoal-700 hover:bg-charcoal-600 text-white px-4 py-2 rounded-lg transition text-sm">Cancel</button>
-                        </div>
-                    </div>
-                </form>
-
-                <!-- Location Display -->
-                <div class="space-y-3">
-
-                    <?php foreach ($locations as $location): ?>
-                        <!-- Location -->
-                        <div class="bg-charcoal-800 p-4 rounded-lg">
-                            <div class="flex justify-between items-center">
-                                <div>
-                                    <h3 class="text-charcoal-200 font-semibold mb-1"><?php echo htmlspecialchars($location['location_name'])?></h3>
-                                    <p class="text-charcoal-400 text-sm"><?php echo htmlspecialchars($location['location_address'])?></p>
+                        <!-- Notes List -->
+                        <div class="space-y-3 max-h-96 overflow-y-auto">
+                            <?php foreach ($notes as $note): ?>
+                                <div class="bg-charcoal-800 p-4 rounded-xl flex justify-between items-start gap-3 hover:bg-charcoal-750 transition-colors">
+                                    <div class="flex flex-col space-y-2 flex-grow">
+                                        <p class="text-charcoal-200 text-sm leading-relaxed"><?php echo htmlspecialchars($note['note'])?></p>
+                                        <span class="text-xs text-charcoal-500"><?php echo htmlspecialchars(timeAgo($note['created_at']))?></span>
+                                    </div>
+                                    <button onclick="openDeleteModal('note', <?php echo htmlspecialchars($note['id']); ?>, 'http://localhost/Lifelines/src/events/notes/delete.php?id=<?php echo htmlspecialchars($note['id'])?>&event_id=<?php echo htmlspecialchars($eventId)?>')" class="text-red-400 hover:text-red-500 cursor-pointer transition flex-shrink-0 hover:scale-110">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </button>
                                 </div>
-                                <a href="src/events/locations/delete.php?id=<?php echo htmlspecialchars($location['id'])?>&event_id=<?php echo htmlspecialchars($eventId)?>" class="text-red-400 hover:text-red-500 cursor-pointer">
-                                    <i class="fa-solid fa-trash-can"></i>
-                                </a>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-                    <?php if (!isset($people[0])): ?>
-                        <div class="text-center text-charcoal-500 text-sm py-8">
-                            No location added yet.
-                        </div>
-                    <?php endif;?>
-                </div>
-            </div>
-
-            <!-- Photos Panel -->
-            <div class="bg-charcoal-900 border border-charcoal-800 rounded-xl shadow-xl p-6">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-xl font-bold text-charcoal-50 flex items-center gap-2">
-                        <i class="fa-solid fa-images text-[<?php echo htmlspecialchars($event['color']); ?>]"></i>
-                        Photos
-                    </h2>
-                    <button onclick="togglePhotosForm()" class="text-sm cursor-pointer bg-[<?php echo htmlspecialchars($event['color']); ?>] hover:bg-[<?php echo htmlspecialchars($event['color']); ?>] text-charcoal-50 py-2.5 px-6 rounded-lg transition">
-                        <i class="fa-solid fa-plus"></i> Add Photos
-                    </button>
-                </div>
-
-                <!-- Add Photos Form -->
-                <form id="photos-form" class="hidden mb-4" action="src/events/photos/create.php" method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="event-id" value="<?php echo htmlspecialchars($eventId); ?>">
-                    <div class="space-y-3">
-                        <input type="file" name="photos[]" multiple accept="image/*" class="w-full p-2 rounded-lg bg-charcoal-800 text-charcoal-50 border border-charcoal-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:bg-[<?php echo htmlspecialchars($event['color']); ?>] file:text-white hover:file:bg-[<?php echo htmlspecialchars($event['color']); ?>]">
-                        <div class="flex gap-2">
-                            <button type="submit" class="bg-[<?php echo htmlspecialchars($event['color']); ?>] hover:bg-[<?php echo htmlspecialchars($event['color']); ?>] text-white px-4 py-2 rounded-lg transition text-sm">Upload</button>
-                            <button type="button" onclick="togglePhotosForm()" class="bg-charcoal-700 hover:bg-charcoal-600 text-white px-4 py-2 rounded-lg transition text-sm">Cancel</button>
+                            <?php endforeach; ?>
+                            <?php if (!isset($notes[0])): ?>
+                                <div class="text-center text-charcoal-500 text-sm py-8">
+                                    <i class="fa-solid fa-note-sticky text-3xl text-charcoal-700 mb-2 block"></i>
+                                    No notes yet
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
-                </form>
 
-                <!-- Photos Grid -->
-                <div id="gallery" class="grid grid-cols-2 gap-3 max-h-96 overflow-y-auto">
-
-                    <?php foreach ($photos as $photo): ?>
-                        <div class="relative group">
-
-                            <!-- Get photo width and height -->
-                            <?php [$width, $height] = getimagesize($photo['photo_path']); ?>
-
-                            <!-- Clickable image for fullscreen carousel -->
-                            <a class="pswp-item" href="<?php echo $photo['photo_path']; ?>" data-pswp-width="<?php echo $width; ?>" data-pswp-height="<?php echo $height; ?>" target="_blank">
-                                <img src="<?php echo $photo['photo_path']; ?>" alt="Event photo" class="w-full h-32 object-contain aspect-square rounded-lg cursor-pointer">
-                            </a>
-
-                            <!-- Delete button -->
-                            <a href="src/events/photos/delete.php?id=<?php echo htmlspecialchars($photo['id']); ?>&eventId=<?php echo htmlspecialchars($eventId); ?>" class="flex justify-center items-center absolute top-2 right-2 bg-red-400 hover:bg-red-500 aspect-square w-10 cursor-pointer text-white p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity z-10">
-                                <i class="fa-solid fa-trash-can"></i>
-                            </a>
-
+                    <!-- People Panel -->
+                    <div class="bg-charcoal-900 border border-charcoal-800 rounded-2xl shadow-xl p-6 md:p-8">
+                        <div class="flex justify-between items-center mb-6">
+                            <h2 class="text-xl md:text-2xl font-bold text-charcoal-50 flex items-center gap-3">
+                                <i class="fa-solid fa-users text-[<?php echo htmlspecialchars($event['color']); ?>] text-2xl"></i>
+                                People
+                            </h2>
+                            <button onclick="togglePeopleForm()" class="text-sm cursor-pointer bg-gradient-to-r from-[<?php echo htmlspecialchars($event['color']); ?>] to-[<?php echo htmlspecialchars($event['color']); ?>]/80 hover:from-[<?php echo htmlspecialchars($event['color']); ?>]/90 hover:to-[<?php echo htmlspecialchars($event['color']); ?>] text-white py-2 px-4 rounded-lg transition-all duration-300 font-semibold shadow-lg hover:shadow-[<?php echo htmlspecialchars($event['color']); ?>]/50">
+                                <i class="fa-solid fa-plus"></i> Add
+                            </button>
                         </div>
-                    <?php endforeach; ?>
 
-                    <?php if (!isset($photos[0])): ?>
-                        <div class="col-span-2 text-center text-charcoal-500 text-sm py-8">
-                            No photos added yet.
+                        <!-- Add Person Form -->
+                        <form id="people-form" class="hidden mb-6 animate-slide-down" action="src/events/people/create.php" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" name="event-id" value="<?php echo htmlspecialchars($eventId); ?>">
+                            <div class="space-y-3">
+                                <input type="text" name="person-name" class="w-full p-4 rounded-xl bg-charcoal-800 text-charcoal-50 border-2 border-charcoal-700 placeholder-charcoal-500 focus:outline-none focus:ring-2 focus:ring-[<?php echo htmlspecialchars($event['color']); ?>] focus:border-[<?php echo htmlspecialchars($event['color']); ?>] transition-all" placeholder="Person's name">
+                                <div>
+                                    <label class="block text-sm text-charcoal-400 mb-2 font-semibold">Photo (optional)</label>
+                                    <input type="file" name="person-photo" accept="image/*" class="w-full p-2 rounded-lg bg-charcoal-800 text-charcoal-50 border-2 border-charcoal-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:bg-[<?php echo htmlspecialchars($event['color']); ?>] file:text-white hover:file:bg-[<?php echo htmlspecialchars($event['color']); ?>]/80 transition-all">
+                                </div>
+                                <div class="flex gap-2">
+                                    <button type="submit" class="bg-gradient-to-r from-[<?php echo htmlspecialchars($event['color']); ?>] to-[<?php echo htmlspecialchars($event['color']); ?>]/80 hover:from-[<?php echo htmlspecialchars($event['color']); ?>]/90 hover:to-[<?php echo htmlspecialchars($event['color']); ?>] text-white px-4 py-2 rounded-lg transition-all text-sm font-semibold shadow-lg">Add</button>
+                                    <button type="button" onclick="togglePeopleForm()" class="bg-charcoal-700 hover:bg-charcoal-600 text-white px-4 py-2 rounded-lg transition text-sm font-semibold">Cancel</button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <!-- People List -->
+                        <div class="space-y-3 max-h-96 overflow-y-auto">
+                            <?php foreach ($people as $person): ?>
+                                <div class="flex items-center gap-3 bg-charcoal-800 p-4 rounded-xl hover:bg-charcoal-750 transition-colors">
+                                    <div class="w-12 h-12 bg-[<?php echo htmlspecialchars($event['color']); ?>] rounded-full flex items-center justify-center text-white font-bold flex-shrink-0 shadow-lg">
+                                        <?php if ($person['photo_path'] === null): ?>
+                                            <?php echo htmlspecialchars(getInitials($person['person_name'])); ?>
+                                        <?php else: ?>
+                                            <img class="rounded-full object-cover aspect-square w-12" src="<?php echo htmlspecialchars($person['photo_path']); ?>" alt="<?php echo htmlspecialchars($person['person_name']); ?>">
+                                        <?php endif; ?>
+                                    </div>
+                                    <span class="text-charcoal-200 flex-grow font-semibold"><?php echo htmlspecialchars($person['person_name'])?></span>
+                                    <button onclick="openDeleteModal('person', <?php echo htmlspecialchars($person['id']); ?>, 'src/events/people/delete.php?id=<?php echo htmlspecialchars($person['id'])?>&event_id=<?php echo htmlspecialchars($eventId)?>')" class="text-red-400 hover:text-red-500 cursor-pointer transition flex-shrink-0 hover:scale-110">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </button>
+                                </div>
+                            <?php endforeach; ?>
+                            <?php if (!isset($people[0])): ?>
+                                <div class="text-center text-charcoal-500 text-sm py-8">
+                                    <i class="fa-solid fa-users text-3xl text-charcoal-700 mb-2 block"></i>
+                                    No people added yet
+                                </div>
+                            <?php endif; ?>
                         </div>
-                    <?php endif; ?>
+                    </div>
+
+                    <!-- Location Panel -->
+                    <div class="bg-charcoal-900 border border-charcoal-800 rounded-2xl shadow-xl p-6 md:p-8">
+                        <div class="flex justify-between items-center mb-6">
+                            <h2 class="text-xl md:text-2xl font-bold text-charcoal-50 flex items-center gap-3">
+                                <i class="fa-solid fa-location-dot text-[<?php echo htmlspecialchars($event['color']); ?>] text-2xl"></i>
+                                Location
+                            </h2>
+                            <button onclick="toggleLocationForm()" class="text-sm cursor-pointer bg-gradient-to-r from-[<?php echo htmlspecialchars($event['color']); ?>] to-[<?php echo htmlspecialchars($event['color']); ?>]/80 hover:from-[<?php echo htmlspecialchars($event['color']); ?>]/90 hover:to-[<?php echo htmlspecialchars($event['color']); ?>] text-white py-2 px-4 rounded-lg transition-all duration-300 font-semibold shadow-lg hover:shadow-[<?php echo htmlspecialchars($event['color']); ?>]/50">
+                                <i class="fa-solid fa-plus"></i> Add
+                            </button>
+                        </div>
+
+                        <!-- Add Location Form -->
+                        <form id="location-form" class="hidden mb-6 animate-slide-down" action="src/events/locations/create.php" method="POST">
+                            <input type="hidden" name="event-id" value="<?php echo htmlspecialchars($eventId); ?>">
+                            <div class="space-y-3">
+                                <input type="text" name="location-name" class="w-full p-4 rounded-xl bg-charcoal-800 text-charcoal-50 border-2 border-charcoal-700 placeholder-charcoal-500 focus:outline-none focus:ring-2 focus:ring-[<?php echo htmlspecialchars($event['color']); ?>] focus:border-[<?php echo htmlspecialchars($event['color']); ?>] transition-all" placeholder="Location name">
+                                <input type="text" name="location-address" class="w-full p-4 rounded-xl bg-charcoal-800 text-charcoal-50 border-2 border-charcoal-700 placeholder-charcoal-500 focus:outline-none focus:ring-2 focus:ring-[<?php echo htmlspecialchars($event['color']); ?>] focus:border-[<?php echo htmlspecialchars($event['color']); ?>] transition-all" placeholder="Address (optional)">
+                                <div class="flex gap-2">
+                                    <button type="submit" class="bg-gradient-to-r from-[<?php echo htmlspecialchars($event['color']); ?>] to-[<?php echo htmlspecialchars($event['color']); ?>]/80 hover:from-[<?php echo htmlspecialchars($event['color']); ?>]/90 hover:to-[<?php echo htmlspecialchars($event['color']); ?>] text-white px-4 py-2 rounded-lg transition-all text-sm font-semibold shadow-lg">Save</button>
+                                    <button type="button" onclick="toggleLocationForm()" class="bg-charcoal-700 hover:bg-charcoal-600 text-white px-4 py-2 rounded-lg transition text-sm font-semibold">Cancel</button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <!-- Location Display -->
+                        <div class="space-y-3">
+                            <?php foreach ($locations as $location): ?>
+                                <div class="bg-charcoal-800 p-4 rounded-xl hover:bg-charcoal-750 transition-colors">
+                                    <div class="flex justify-between items-start gap-3">
+                                        <div class="flex-grow">
+                                            <h3 class="text-charcoal-200 font-semibold mb-1"><?php echo htmlspecialchars($location['location_name'])?></h3>
+                                            <p class="text-charcoal-400 text-sm"><?php echo htmlspecialchars($location['location_address'])?></p>
+                                        </div>
+                                        <button onclick="openDeleteModal('location', <?php echo htmlspecialchars($location['id']); ?>, 'src/events/locations/delete.php?id=<?php echo htmlspecialchars($location['id'])?>&event_id=<?php echo htmlspecialchars($eventId)?>')" class="text-red-400 hover:text-red-500 cursor-pointer transition flex-shrink-0 hover:scale-110">
+                                            <i class="fa-solid fa-trash-can"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                            <?php if (!isset($locations[0])): ?>
+                                <div class="text-center text-charcoal-500 text-sm py-8">
+                                    <i class="fa-solid fa-location-dot text-3xl text-charcoal-700 mb-2 block"></i>
+                                    No locations added yet
+                                </div>
+                            <?php endif;?>
+                        </div>
+                    </div>
 
                 </div>
 
-            </div>
+                <!-- Photos Panel -->
+                <div class="bg-charcoal-900 border border-charcoal-800 rounded-2xl shadow-xl p-6 md:p-8 w-full">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl md:text-2xl font-bold text-charcoal-50 flex items-center gap-3">
+                            <i class="fa-solid fa-images text-[<?php echo htmlspecialchars($event['color']); ?>] text-2xl"></i>
+                            Photos
+                        </h2>
+                        <button onclick="togglePhotosForm()" class="text-sm cursor-pointer bg-gradient-to-r from-[<?php echo htmlspecialchars($event['color']); ?>] to-[<?php echo htmlspecialchars($event['color']); ?>]/80 hover:from-[<?php echo htmlspecialchars($event['color']); ?>]/90 hover:to-[<?php echo htmlspecialchars($event['color']); ?>] text-white py-2 px-4 rounded-lg transition-all duration-300 font-semibold shadow-lg hover:shadow-[<?php echo htmlspecialchars($event['color']); ?>]/50">
+                            <i class="fa-solid fa-plus"></i> Add
+                        </button>
+                    </div>
 
-        </div>
+                    <!-- Add Photos Form -->
+                    <form id="photos-form" class="hidden mb-6 animate-slide-down" action="src/events/photos/create.php" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="event-id" value="<?php echo htmlspecialchars($eventId); ?>">
+                        <div class="space-y-3">
+                            <input type="file" name="photos[]" multiple accept="image/*" class="w-full p-2 rounded-lg bg-charcoal-800 text-charcoal-50 border-2 border-charcoal-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:bg-[<?php echo htmlspecialchars($event['color']); ?>] file:text-white hover:file:bg-[<?php echo htmlspecialchars($event['color']); ?>]/80 transition-all">
+                            <div class="flex gap-2">
+                                <button type="submit" class="bg-gradient-to-r from-[<?php echo htmlspecialchars($event['color']); ?>] to-[<?php echo htmlspecialchars($event['color']); ?>]/80 hover:from-[<?php echo htmlspecialchars($event['color']); ?>]/90 hover:to-[<?php echo htmlspecialchars($event['color']); ?>] text-white px-4 py-2 rounded-lg transition-all text-sm font-semibold shadow-lg">Upload</button>
+                                <button type="button" onclick="togglePhotosForm()" class="bg-charcoal-700 hover:bg-charcoal-600 text-white px-4 py-2 rounded-lg transition text-sm font-semibold">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Photos Grid -->
+                    <div id="gallery" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+
+                        <?php foreach ($photos as $photo): ?>
+                            <div class="relative group">
+
+                                <!-- Get photo width and height -->
+                                <?php [$width, $height] = getimagesize($photo['photo_path']); ?>
+
+                                <!-- Clickable image for fullscreen carousel -->
+                                <a class="pswp-item block overflow-hidden rounded-xl" href="<?php echo $photo['photo_path']; ?>" data-pswp-width="<?php echo $width; ?>" data-pswp-height="<?php echo $height; ?>" target="_blank">
+                                    <img src="<?php echo $photo['photo_path']; ?>" alt="Event photo" class="w-full h-32 object-cover rounded-xl cursor-pointer hover:scale-110 transition-transform duration-300">
+                                </a>
+
+                                <!-- Delete button -->
+                                <button onclick="openDeleteModal('photo', <?php echo htmlspecialchars($photo['id']); ?>, 'src/events/photos/delete.php?id=<?php echo htmlspecialchars($photo['id']); ?>&eventId=<?php echo htmlspecialchars($eventId); ?>')" class="flex justify-center items-center absolute top-2 right-2 bg-red-500 hover:bg-red-600 aspect-square w-10 cursor-pointer text-white p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity z-10 shadow-lg hover:scale-110">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+
+                            </div>
+                        <?php endforeach; ?>
+
+                        <?php if (!isset($photos[0])): ?>
+                            <div class="col-span-2 md:col-span-3 lg:col-span-4 text-center text-charcoal-500 text-sm py-12">
+                                <i class="fa-solid fa-images text-4xl text-charcoal-700 mb-3 block"></i>
+                                No photos added yet
+                            </div>
+                        <?php endif; ?>
+
+                    </div>
+
+                </div>
+
+            </section>
+        </main>
 
         <!-- Back Button -->
-        <div class="mt-8 text-center">
-            <a href="index.php" class="inline-block bg-charcoal-800 hover:bg-charcoal-700 text-charcoal-200 px-6 py-3 rounded-lg transition">
+        <div class="mt-12 text-center">
+            <a href="index.php" class="inline-block bg-charcoal-800 hover:bg-charcoal-700 text-charcoal-200 px-8 py-3 rounded-xl transition font-semibold shadow-lg hover:shadow-charcoal-800/50">
                 <i class="fa-solid fa-arrow-left mr-2"></i>Back to Timeline
             </a>
         </div>
 
     </div> 
+
+    <!-- Delete Confirmation Modal -->
+    <?php include 'templates/delete-modal.php'; ?>
 
     <!-- Footer -->
     <?php include 'templates/footer.php'; ?>

@@ -258,7 +258,7 @@
                                                     <?php echo htmlspecialchars($event['description']); ?>
                                                 </p>
                                             </div>
-                                            <button onclick="event.preventDefault(); event.stopPropagation(); if(confirm('Are you sure you want to delete this event?')) window.location.href='src/events/delete.php?id=<?php echo urlencode($event['id']); ?>';" class="ml-auto shrink-0 w-12 h-12 rounded-xl bg-charcoal-700 hover:bg-red-500/20 flex cursor-pointer items-center justify-center transition-all duration-300 group/delete" type="button" aria-label="Delete <?php echo htmlspecialchars($event['type']); ?> event">
+                                            <button onclick="event.preventDefault(); event.stopPropagation(); openDeleteModal('event', <?php echo htmlspecialchars($event['id']); ?>, 'src/events/delete.php?id=<?php echo urlencode($event['id']); ?>', '<?php echo htmlspecialchars($event['type']); ?>');" class="ml-auto shrink-0 w-12 h-12 rounded-xl bg-charcoal-700 hover:bg-red-500/20 flex cursor-pointer items-center justify-center transition-all duration-300 group/delete" type="button" aria-label="Delete <?php echo htmlspecialchars($event['type']); ?> event">
                                                 <i class="fa-solid fa-trash-can text-red-500 text-xl group-hover/delete:scale-110 transition-transform" aria-hidden="true"></i>
                                             </button>
                                         </div>
@@ -274,9 +274,11 @@
 
     </div>
 
+    <!-- Delete Confirmation Modal -->
+    <?php include 'templates/delete-modal.php'; ?>
+
     <!-- Footer -->
     <?php include 'templates/footer.php'; ?>
-    
     <script src="script.js"></script>
 </body>
 </html>
