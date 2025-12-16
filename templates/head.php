@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://unpkg.com/photoswipe@5/dist/photoswipe.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/leoanangmh/flexidatepicker@1.1.5/dist/flexidatepicker.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
+    <script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js"></script>
 
     <style type="text/tailwindcss">
         @theme {

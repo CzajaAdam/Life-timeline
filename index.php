@@ -29,7 +29,7 @@
         <!-- Navbar -->
         <?php include 'templates/navbar.php'; ?>
 
-        <!-- Header with improved spacing and animation -->
+        <!-- Header -->
         <header class="flex justify-start items-center flex-col pt-8 pb-4 animate-fade-in" role="banner">
             <img class="h-20 mb-4 transition-transform duration-300 hover:scale-110" src="lifelines.png" alt="LifeLines logo">
             <h1 class="text-4xl md:text-5xl text-center font-bold text-charcoal-50 mb-3 tracking-tight">LifeLines</h1>
@@ -37,7 +37,7 @@
             <p class="text-charcoal-400 text-center text-sm tracking-wider uppercase">Your Life's Journey</p>
         </header>
 
-        <!-- Welcome Section with improved layout -->
+        <!-- Welcome Section -->
         <main role="main" class="flex-grow">
             <section class="flex flex-col justify-start items-center px-4 py-8 max-w-4xl mx-auto" aria-labelledby="welcome-heading">
                 
@@ -76,13 +76,13 @@
                     </div>
                 <?php endif; ?>
                 
-                <!-- Create Event Button with improved styling -->
+                <!-- Create Event Button -->
                 <button onclick="toggleCreateEventForm()" id="create-event-btn" class="group mb-8 px-8 py-4 rounded-xl bg-gradient-to-r from-caleadon-600 to-caleadon-500 hover:from-caleadon-500 hover:to-caleadon-400 cursor-pointer text-white font-bold transition-all duration-300 shadow-lg hover:shadow-caleadon-500/50 hover:scale-105 flex items-center gap-3" type="button" aria-expanded="false" aria-controls="create-event-form">
                     <i class="fa-solid fa-plus text-lg transition-transform group-hover:rotate-90 duration-300" aria-hidden="true"></i>
                     <span class="text-lg">Create New Event</span>
                 </button>
 
-                <!-- Create Event Form with improved design -->
+                <!-- Create Event Form -->
                 <form class="hidden flex-col p-8 md:p-10 rounded-2xl text-charcoal-50 bg-gradient-to-br from-charcoal-900 to-charcoal-800 border border-charcoal-700 shadow-2xl w-full max-w-2xl space-y-6 animate-slide-down" id="create-event-form" action="src/events/create.php" method="POST" aria-labelledby="create-event-heading">
                     
                     <div class="flex items-center justify-between mb-4">
@@ -110,7 +110,7 @@
                             <i class="fa-solid fa-align-left text-caleadon-500 mr-2" aria-hidden="true"></i>
                             Event Description
                         </label>
-                        <textarea id="event-description" rows="3" class="w-full p-4 rounded-xl bg-charcoal-800 text-charcoal-50 border-2 border-charcoal-700 placeholder-charcoal-500 focus:outline-none focus:ring-2 focus:ring-caleadon-500 focus:border-caleadon-500 transition-all resize-none" placeholder="Describe this memorable moment..." name="event-description" required aria-required="true"></textarea>
+                        <textarea id="event-description" rows="3" class="w-full p-4 rounded-xl bg-charcoal-800 text-charcoal-50 border-2 border-charcoal-700 placeholder-charcoal-500 focus:outline-none focus:ring-2 focus:ring-caleadon-500 focus:border-caleadon-500 transition-all resize-none" placeholder="Describe this memorable moment..." name="event-description" aria-required="true"></textarea>
                     </div>
                     
                     <!-- Event Datepicker -->
@@ -124,9 +124,6 @@
                         <span id="date-hint" class="sr-only">
                             Use the date picker to select an event date
                         </span>
-
-                        <!-- Hidden input for actual value -->
-                        <input type="hidden" id="dateValue">
                     </div>
 
                     <!-- Two column layout for icon and color -->
@@ -137,7 +134,7 @@
                                 <i class="fa-solid fa-icons text-caleadon-500 mr-2" aria-hidden="true"></i>
                                 Event Icon
                             </label>
-                            <input type="hidden" id="event-icon" name="event-icon" value="fa-solid fa-graduation-cap">
+                            <input type="hidden" id="event-icon" name="event-icon">
                             
                             <!-- Dropdown Button -->
                             <button type="button" id="icon-dropdown-btn" class="w-full p-4 cursor-pointer rounded-xl bg-charcoal-800 border-2 border-charcoal-700 flex items-center justify-between hover:border-charcoal-600 focus:outline-none focus:ring-2 focus:ring-caleadon-500 focus:border-caleadon-500 transition-all" aria-expanded="false" aria-controls="icon-grid" aria-haspopup="true" aria-label="Select event icon">
@@ -198,7 +195,7 @@
                 <hr class="flex-grow border-charcoal-800" role="presentation">
             </div>
 
-            <!-- Timeline Events with improved layout -->
+            <!-- Timeline Events -->
             <section class="flex flex-col w-full max-w-5xl mx-auto px-4 md:px-8 pb-16" aria-labelledby="timeline-heading">
                 
                 <div class="text-center mb-12">
