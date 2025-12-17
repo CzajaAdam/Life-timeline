@@ -265,7 +265,7 @@
                                 <h3 class="text-red-200 font-semibold">Delete Account</h3>
                                 <p class="text-red-400 text-sm">Permanently delete your account and all associated data</p>
                             </div>
-                            <button class="px-6 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white font-semibold transition-all duration-300 cursor-pointer">
+                            <button onclick="openDeleteModal('account', null, 'src/settings/delete/account.php')" class="px-6 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white font-semibold transition-all duration-300 cursor-pointer">
                                 <i class="fa-solid fa-trash-can mr-2"></i>Delete
                             </button>
                         </div>
@@ -279,6 +279,7 @@
 
     <!-- Footer -->
     <?php include 'templates/footer.php'; ?>
+    <?php include 'templates/delete-modal.php'; ?>
     
     <script>
         // Settings tab switching
