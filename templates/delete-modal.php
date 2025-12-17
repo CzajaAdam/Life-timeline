@@ -18,10 +18,10 @@
 
         <!-- Buttons -->
         <div class="flex gap-3">
-            <button onclick="closeDeleteModal()" class="flex-1 px-4 py-3 rounded-lg bg-charcoal-700 hover:bg-charcoal-600 text-charcoal-200 font-semibold transition-all duration-300">
+            <button onclick="closeDeleteModal()" class="flex-1 cursor-pointer px-4 py-3 rounded-lg bg-charcoal-700 hover:bg-charcoal-600 text-charcoal-200 font-semibold transition-all duration-300">
                 <i class="fa-solid fa-times mr-2"></i>Cancel
             </button>
-            <button onclick="confirmDelete()" class="flex-1 px-4 py-3 rounded-lg bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white font-semibold transition-all duration-300 shadow-lg hover:shadow-red-500/50">
+            <button onclick="confirmDelete()" class="flex-1 cursor-pointer px-4 py-3 rounded-lg bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white font-semibold transition-all duration-300 shadow-lg hover:shadow-red-500/50">
                 <i class="fa-solid fa-trash-can mr-2"></i>Delete
             </button>
         </div>
