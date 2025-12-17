@@ -50,26 +50,26 @@
                                 Profile Information
                             </h2>
                             
-                            <form class="space-y-4">
+                            <form class="space-y-4" action="src/settings/name/update.php" method="POST">
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
                                         <label class="block text-charcoal-200 text-sm font-semibold mb-2">
                                             <i class="fa-solid fa-user mr-2 text-caleadon-500"></i>Full Name
                                         </label>
-                                        <input type="text" placeholder="Your full name" class="w-full p-3 rounded-lg bg-charcoal-800 text-charcoal-50 border-2 border-charcoal-700 placeholder-charcoal-500 focus:outline-none focus:ring-2 focus:ring-caleadon-500 focus:border-caleadon-500 transition-all">
+                                        <input name="full-name" type="text" placeholder="Your full name" class="w-full p-3 rounded-lg bg-charcoal-800 text-charcoal-50 border-2 border-charcoal-700 placeholder-charcoal-500 focus:outline-none focus:ring-2 focus:ring-caleadon-500 focus:border-caleadon-500 transition-all">
                                     </div>
                                     <div>
                                         <label class="block text-charcoal-200 text-sm font-semibold mb-2">
                                             <i class="fa-solid fa-envelope mr-2 text-caleadon-500"></i>Email Address
                                         </label>
-                                        <input type="email" placeholder="your.email@example.com" class="w-full p-3 rounded-lg bg-charcoal-800 text-charcoal-50 border-2 border-charcoal-700 placeholder-charcoal-500 focus:outline-none focus:ring-2 focus:ring-caleadon-500 focus:border-caleadon-500 transition-all">
+                                        <input name="email" type="email" placeholder="your.email@example.com" class="w-full p-3 rounded-lg bg-charcoal-800 text-charcoal-50 border-2 border-charcoal-700 placeholder-charcoal-500 focus:outline-none focus:ring-2 focus:ring-caleadon-500 focus:border-caleadon-500 transition-all">
                                     </div>
                                 </div>
                                 <div>
                                     <label class="block text-charcoal-200 text-sm font-semibold mb-2">
                                         <i class="fa-solid fa-align-left mr-2 text-caleadon-500"></i>Bio
                                     </label>
-                                    <textarea rows="3" placeholder="Tell us about yourself..." class="w-full p-3 rounded-lg bg-charcoal-800 text-charcoal-50 border-2 border-charcoal-700 placeholder-charcoal-500 focus:outline-none focus:ring-2 focus:ring-caleadon-500 focus:border-caleadon-500 transition-all resize-none"></textarea>
+                                    <textarea name="bio" rows="3" placeholder="Tell us about yourself..." class="w-full p-3 rounded-lg bg-charcoal-800 text-charcoal-50 border-2 border-charcoal-700 placeholder-charcoal-500 focus:outline-none focus:ring-2 focus:ring-caleadon-500 focus:border-caleadon-500 transition-all resize-none"></textarea>
                                 </div>
                                 <button type="submit" class="bg-gradient-to-r from-caleadon-600 to-caleadon-500 hover:from-caleadon-500 hover:to-caleadon-400 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-caleadon-500/50 cursor-pointer">
                                     <i class="fa-solid fa-save mr-2"></i>Save Changes
@@ -84,24 +84,24 @@
                                 Change Password
                             </h2>
                             
-                            <form class="space-y-4">
+                            <form class="space-y-4" action="src/settings/update/password.php" method="POST">
                                 <div>
                                     <label class="block text-charcoal-200 text-sm font-semibold mb-2">
                                         <i class="fa-solid fa-lock mr-2 text-caleadon-500"></i>Current Password
                                     </label>
-                                    <input type="password" placeholder="Enter your current password" class="w-full p-3 rounded-lg bg-charcoal-800 text-charcoal-50 border-2 border-charcoal-700 placeholder-charcoal-500 focus:outline-none focus:ring-2 focus:ring-caleadon-500 focus:border-caleadon-500 transition-all">
+                                    <input name="current-password" type="password" placeholder="Enter your current password" class="w-full p-3 rounded-lg bg-charcoal-800 text-charcoal-50 border-2 border-charcoal-700 placeholder-charcoal-500 focus:outline-none focus:ring-2 focus:ring-caleadon-500 focus:border-caleadon-500 transition-all">
                                 </div>
                                 <div>
                                     <label class="block text-charcoal-200 text-sm font-semibold mb-2">
                                         <i class="fa-solid fa-lock mr-2 text-caleadon-500"></i>New Password
                                     </label>
-                                    <input type="password" placeholder="Enter your new password" class="w-full p-3 rounded-lg bg-charcoal-800 text-charcoal-50 border-2 border-charcoal-700 placeholder-charcoal-500 focus:outline-none focus:ring-2 focus:ring-caleadon-500 focus:border-caleadon-500 transition-all">
+                                    <input name="new-password" type="password" placeholder="Enter your new password" class="w-full p-3 rounded-lg bg-charcoal-800 text-charcoal-50 border-2 border-charcoal-700 placeholder-charcoal-500 focus:outline-none focus:ring-2 focus:ring-caleadon-500 focus:border-caleadon-500 transition-all">
                                 </div>
                                 <div>
                                     <label class="block text-charcoal-200 text-sm font-semibold mb-2">
                                         <i class="fa-solid fa-lock mr-2 text-caleadon-500"></i>Confirm Password
                                     </label>
-                                    <input type="password" placeholder="Confirm your new password" class="w-full p-3 rounded-lg bg-charcoal-800 text-charcoal-50 border-2 border-charcoal-700 placeholder-charcoal-500 focus:outline-none focus:ring-2 focus:ring-caleadon-500 focus:border-caleadon-500 transition-all">
+                                    <input name="confirm-new-password" type="password" placeholder="Confirm your new password" class="w-full p-3 rounded-lg bg-charcoal-800 text-charcoal-50 border-2 border-charcoal-700 placeholder-charcoal-500 focus:outline-none focus:ring-2 focus:ring-caleadon-500 focus:border-caleadon-500 transition-all">
                                 </div>
                                 <button type="submit" class="bg-gradient-to-r from-caleadon-600 to-caleadon-500 hover:from-caleadon-500 hover:to-caleadon-400 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-caleadon-500/50 cursor-pointer">
                                     <i class="fa-solid fa-check mr-2"></i>Update Password
